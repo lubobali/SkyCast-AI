@@ -166,6 +166,25 @@ class TestPlainHttpRoutes:
         assert payload.status_code == 200
         assert isolated_adapters["weather"].calls == []
 
+    def test_healthz_reports_where_the_contact_string_came_from(self, monkeypatch):
+        # The one fact about a deployment that is otherwise unobservable: the
+        # secret and the fallback are both valid contact strings, so a server
+        # running on the fallback because an ACL was never granted looks
+        # identical to one reading the secret.
+        monkeypatch.setenv("NWS_USER_AGENT", "(SkyCast-AI, test@example.com)")
+        import json
+
+        payload = json.loads(asyncio.run(server.healthz(None)).body)
+        assert payload["nws_contact"] == "environment"
+        assert payload["secret"] == "lubo-skycast/nws-user-agent"
+
+    def test_healthz_never_leaks_the_contact_value(self, monkeypatch):
+        # It carries a personal email address, and this endpoint is reachable
+        # by anyone who can reach the app.
+        monkeypatch.setenv("NWS_USER_AGENT", "(SkyCast-AI, private@example.com)")
+        body = asyncio.run(server.healthz(None)).body.decode()
+        assert "private@example.com" not in body
+
     def test_the_landing_page_lists_every_tool(self):
         body = asyncio.run(server.index(None)).body.decode()
         for name in TOOL_NAMES:

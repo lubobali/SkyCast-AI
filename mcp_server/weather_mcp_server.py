@@ -494,14 +494,34 @@ def compare_cities(locations: list[str], date: str | None = None) -> dict[str, A
 
 @mcp.custom_route("/healthz", methods=["GET"])
 async def healthz(request):
-    """Liveness. Deliberately does not call a weather API.
+    """Liveness, plus where the NWS contact string came from.
 
-    A health check that depends on Open-Meteo reports this server as unhealthy
-    during somebody else's outage, and gets it restarted for no reason.
+    Deliberately does not call a weather API. A health check that depends on
+    Open-Meteo reports this server unhealthy during somebody else's outage, and
+    gets it restarted for no reason.
+
+    It does report `nws_contact`, which is the one thing about this deployment
+    that is otherwise unobservable. Both the secret and the fallback are valid
+    contact strings that api.weather.gov accepts, so a server quietly running on
+    the fallback - because the secret scope was never created, or the app's
+    service principal was never granted READ on it - behaves identically to one
+    reading the secret. `"secret"` here is the proof that the whole path works.
+
+    The source, never the value: the value carries a personal email address, and
+    this endpoint is reachable by anyone who can reach the app.
     """
+    from secret_store import KEY, SCOPE, resolve_user_agent
     from starlette.responses import JSONResponse
 
-    return JSONResponse({"status": "ok", "server": "skycast-weather", "tools": len(_TOOL_NAMES)})
+    return JSONResponse(
+        {
+            "status": "ok",
+            "server": "skycast-weather",
+            "tools": len(_TOOL_NAMES),
+            "nws_contact": resolve_user_agent()[1],
+            "secret": f"{SCOPE}/{KEY}",
+        }
+    )
 
 
 @mcp.custom_route("/", methods=["GET"])

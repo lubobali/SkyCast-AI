@@ -92,6 +92,35 @@ def read_secret(scope: str = SCOPE, key: str = KEY) -> str | None:
     return base64.b64decode(secret.value).decode("utf-8").strip()
 
 
+def resolve_user_agent() -> tuple[str, str]:
+    """The contact string api.weather.gov requires, and where it came from.
+
+    The source is returned alongside the value because "did the secret actually
+    work" is otherwise unanswerable from outside. Both the secret and the
+    fallback are valid contact strings that NWS accepts, so a server quietly
+    running on the fallback because an ACL was never granted looks exactly like
+    one running on the secret. /healthz reports the source, never the value.
+
+    Returns:
+        (user_agent, source), where source is "environment", "secret", or
+        "fallback".
+    """
+    from_env = (os.environ.get("NWS_USER_AGENT") or "").strip()
+    if from_env:
+        return from_env, "environment"
+
+    from_secret = read_secret()
+    if from_secret:
+        return from_secret, "secret"
+
+    logger.warning(
+        "Using the fallback NWS User-Agent. Set NWS_USER_AGENT locally, or put a "
+        "contact address in the %s/%s secret, so NWS can reach whoever runs this.",
+        SCOPE, KEY,
+    )
+    return FALLBACK_USER_AGENT, "fallback"
+
+
 def nws_user_agent() -> str:
     """The contact string api.weather.gov requires, from wherever it lives.
 
@@ -99,20 +128,14 @@ def nws_user_agent() -> str:
     generic fallback that gets the server running beats a 403 that reads like
     an outage.
     """
-    from_env = (os.environ.get("NWS_USER_AGENT") or "").strip()
-    if from_env:
-        return from_env
-
-    from_secret = read_secret()
-    if from_secret:
-        return from_secret
-
-    logger.warning(
-        "Using the fallback NWS User-Agent. Set NWS_USER_AGENT locally, or put a "
-        "contact address in the %s/%s secret, so NWS can reach whoever runs this.",
-        SCOPE, KEY,
-    )
-    return FALLBACK_USER_AGENT
+    return resolve_user_agent()[0]
 
 
-__all__ = ["FALLBACK_USER_AGENT", "KEY", "SCOPE", "nws_user_agent", "read_secret"]
+__all__ = [
+    "FALLBACK_USER_AGENT",
+    "KEY",
+    "SCOPE",
+    "nws_user_agent",
+    "read_secret",
+    "resolve_user_agent",
+]
