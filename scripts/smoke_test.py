@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import sys
 
 from fastmcp import Client
@@ -51,10 +52,21 @@ def unwrap(result) -> dict:
     return {}
 
 
-async def run(url: str) -> int:
+async def run(url: str, token: str | None = None) -> int:
     failures = 0
 
-    async with Client(url) as client:
+    # The deployment behind a bearer token needs the header; the Databricks App
+    # deployment needs no header at all, because the platform authenticates the
+    # request before it arrives. One script, both targets.
+    target = url
+    if token:
+        from fastmcp.client.transports import StreamableHttpTransport
+
+        target = StreamableHttpTransport(
+            url=url, headers={"Authorization": f"Bearer {token}"}
+        )
+
+    async with Client(target) as client:
         tools = await client.list_tools()
         print(f"Connected to {url}")
         print(f"{len(tools)} tools discovered:\n")
@@ -105,7 +117,13 @@ async def run(url: str) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:8000/mcp")
-    return asyncio.run(run(parser.parse_args().url))
+    parser.add_argument(
+        "--token",
+        default=os.environ.get("SKYCAST_BEARER_TOKEN"),
+        help="Bearer token, if the target requires one. Defaults to $SKYCAST_BEARER_TOKEN.",
+    )
+    arguments = parser.parse_args()
+    return asyncio.run(run(arguments.url, arguments.token))
 
 
 if __name__ == "__main__":

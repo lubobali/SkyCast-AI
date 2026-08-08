@@ -34,6 +34,7 @@ import logging
 import os
 from typing import Any
 
+import bearer_auth
 import validation
 from fastmcp import FastMCP
 from location import LocationError
@@ -613,7 +614,27 @@ def main() -> None:
 
     logger.info("SkyCast-AI MCP server starting on %s:%s", host, port)
     logger.info("Tools: %s", ", ".join(sorted(_TOOL_NAMES)))
-    mcp.run(transport="streamable-http", host=host, port=port)
+
+    token = bearer_auth.configured_token()
+    if not token:
+        # The Databricks Apps path. The platform authenticates every request
+        # before it reaches this process, so a second check here would only be
+        # something else to get wrong.
+        logger.info("Auth: none (the hosting platform is expected to provide it)")
+        mcp.run(transport="streamable-http", host=host, port=port)
+        return
+
+    # The reachable-from-anywhere path. See bearer_auth.py for why a second
+    # deployment exists at all.
+    import uvicorn
+
+    logger.info("Auth: bearer token required (%s is set)", bearer_auth.ENV_VAR)
+    uvicorn.run(
+        bearer_auth.wrap(mcp.http_app(), token),
+        host=host,
+        port=port,
+        log_level=os.environ.get("LOG_LEVEL", "info").lower(),
+    )
 
 
 _TOOL_SUMMARIES = (
