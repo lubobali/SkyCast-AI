@@ -1,0 +1,898 @@
+{
+    "@context": [
+        "https://geojson.org/geojson-ld/geojson-context.jsonld",
+        {
+            "@version": "1.1",
+            "wx": "https://api.weather.gov/ontology#",
+            "@vocab": "https://api.weather.gov/ontology#"
+        }
+    ],
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.f1350434f75849788c705b7a5ac9492066d54080.001.1",
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -94.9,
+                            33.77
+                        ],
+                        [
+                            -94.92,
+                            33.8
+                        ],
+                        [
+                            -94.88,
+                            33.85
+                        ],
+                        [
+                            -94.78,
+                            33.9
+                        ],
+                        [
+                            -94.65,
+                            33.72
+                        ],
+                        [
+                            -94.74,
+                            33.7
+                        ],
+                        [
+                            -94.75,
+                            33.7
+                        ],
+                        [
+                            -94.82,
+                            33.67
+                        ],
+                        [
+                            -94.9,
+                            33.77
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.f1350434f75849788c705b7a5ac9492066d54080.001.1",
+                "@type": "wx:Alert",
+                "id": "urn:oid:2.49.0.1.840.0.f1350434f75849788c705b7a5ac9492066d54080.001.1",
+                "areaDesc": "McCurtain, OK; Red River, TX",
+                "geocode": {
+                    "SAME": [
+                        "040089",
+                        "048387"
+                    ],
+                    "UGC": [
+                        "OKC089",
+                        "TXC387"
+                    ]
+                },
+                "affectedZones": [
+                    "https://api.weather.gov/zones/county/OKC089",
+                    "https://api.weather.gov/zones/county/TXC387"
+                ],
+                "references": [],
+                "sent": "2026-08-08T10:50:00-05:00",
+                "effective": "2026-08-08T10:50:00-05:00",
+                "onset": "2026-08-08T10:50:00-05:00",
+                "expires": "2026-08-08T12:45:00-05:00",
+                "ends": "2026-08-08T12:45:00-05:00",
+                "status": "Actual",
+                "messageType": "Alert",
+                "category": "Met",
+                "severity": "Minor",
+                "certainty": "Likely",
+                "urgency": "Expected",
+                "event": "Flood Advisory",
+                "sender": "w-nws.webmaster@noaa.gov",
+                "senderName": "NWS Shreveport LA",
+                "headline": "Flood Advisory issued August 8 at 10:50AM CDT until August 8 at 12:45PM CDT by NWS Shreveport LA",
+                "description": "* WHAT...Urban area and small stream flooding caused by excessive\nrainfall is expected.\n\n* WHERE...South Central McCurtain County in southeastern Oklahoma...\nEast Central Red River County in northeastern Texas...\n\n* WHEN...Until 1245 PM CDT.\n\n* IMPACTS...Minor flooding in low-lying and poor drainage areas.\n\n* ADDITIONAL DETAILS...\n- At 1050 AM CDT, Doppler radar indicated heavy rain due to\nthunderstorms. This  will cause urban and small stream flooding.\nBetween 1 and 2 inches of rain have fallen.\n- Additional rainfall amounts of 1 to 2 inches are expected over\nthe area. This additional rain will result in minor flooding.\n- Some locations that will experience flooding include...\nIdabel and Harris.\n- http://www.weather.gov/safety/flood",
+                "instruction": "Turn around, don't drown when encountering flooded roads. Most flood\ndeaths occur in vehicles.\n\nBe aware of your surroundings and do not drive on flooded roads.",
+                "response": "Avoid",
+                "note": null,
+                "parameters": {
+                    "AWIPSidentifier": [
+                        "FLSSHV"
+                    ],
+                    "WMOidentifier": [
+                        "WGUS84 KSHV 081550"
+                    ],
+                    "NWSheadline": [
+                        "FLOOD ADVISORY IN EFFECT UNTIL 1245 PM CDT THIS AFTERNOON"
+                    ],
+                    "BLOCKCHANNEL": [
+                        "EAS",
+                        "NWEM",
+                        "CMAS"
+                    ],
+                    "VTEC": [
+                        "/O.NEW.KSHV.FA.Y.0049.260808T1550Z-260808T1745Z/"
+                    ],
+                    "eventEndingTime": [
+                        "2026-08-08T12:45:00-05:00"
+                    ]
+                },
+                "scope": "Public",
+                "code": "IPAWSv1.0",
+                "language": "en-US",
+                "web": "http://www.weather.gov",
+                "eventCode": {
+                    "SAME": [
+                        "NWS"
+                    ],
+                    "NationalWeatherService": [
+                        "FAY"
+                    ]
+                }
+            }
+        },
+        {
+            "id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.f52a015ba931cb3f1a8ca444a4de7ba255e67b57.001.1",
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -94.91,
+                            33.81
+                        ],
+                        [
+                            -94.74,
+                            33.89
+                        ],
+                        [
+                            -94.51,
+                            33.64
+                        ],
+                        [
+                            -94.78,
+                            33.52
+                        ],
+                        [
+                            -94.91,
+                            33.81
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.f52a015ba931cb3f1a8ca444a4de7ba255e67b57.001.1",
+                "@type": "wx:Alert",
+                "id": "urn:oid:2.49.0.1.840.0.f52a015ba931cb3f1a8ca444a4de7ba255e67b57.001.1",
+                "areaDesc": "McCurtain; Red River; Bowie",
+                "geocode": {
+                    "SAME": [
+                        "040089",
+                        "048387",
+                        "048037"
+                    ],
+                    "UGC": [
+                        "OKZ077",
+                        "TXZ096",
+                        "TXZ097"
+                    ]
+                },
+                "affectedZones": [
+                    "https://api.weather.gov/zones/forecast/OKZ077",
+                    "https://api.weather.gov/zones/forecast/TXZ096",
+                    "https://api.weather.gov/zones/forecast/TXZ097"
+                ],
+                "references": [],
+                "sent": "2026-08-08T10:35:00-05:00",
+                "effective": "2026-08-08T10:35:00-05:00",
+                "onset": "2026-08-08T10:35:00-05:00",
+                "expires": "2026-08-08T11:30:00-05:00",
+                "ends": null,
+                "status": "Actual",
+                "messageType": "Alert",
+                "category": "Met",
+                "severity": "Moderate",
+                "certainty": "Observed",
+                "urgency": "Expected",
+                "event": "Special Weather Statement",
+                "sender": "w-nws.webmaster@noaa.gov",
+                "senderName": "NWS Shreveport LA",
+                "headline": "Special Weather Statement issued August 8 at 10:35AM CDT by NWS Shreveport LA",
+                "description": "At 1035 AM CDT, Doppler radar was tracking a strong thunderstorm 10\nmiles south of Idabel, or 20 miles northeast of Clarksville, moving\nsoutheast at 15 mph.\n\nHAZARD...Wind gusts up to 40 mph and half inch size hail.\n\nSOURCE...Radar indicated.\n\nIMPACT...Gusty winds could knock down tree limbs and blow around\nunsecured objects. Minor damage to outdoor objects is\npossible.\n\nLocations impacted include...\nAvery, Harris, Goodlake and Beaverdams.",
+                "instruction": "Monitor the weather situation closely and be alert for threatening\nweather conditions.\n\nThis storm may intensify, so be certain to monitor local radio\nstations and available television stations for additional information\nand possible warnings from the National Weather Service.\n\nFrequent cloud to ground lightning is occurring with this storm.\nLightning can strike 10 miles away from a thunderstorm. Seek a safe\nshelter inside a building or vehicle.\n\nTorrential rainfall is also occurring with this storm and may lead to\nflash flooding. Do not drive your vehicle through flooded roadways.",
+                "response": "Execute",
+                "note": null,
+                "parameters": {
+                    "AWIPSidentifier": [
+                        "SPSSHV"
+                    ],
+                    "WMOidentifier": [
+                        "WWUS84 KSHV 081535"
+                    ],
+                    "NWSheadline": [
+                        "A STRONG THUNDERSTORM WILL IMPACT EAST CENTRAL RED RIVER... NORTHWESTERN BOWIE AND SOUTH CENTRAL MCCURTAIN COUNTIES UNTIL 1130 AM CDT"
+                    ],
+                    "eventMotionDescription": [
+                        "2026-08-08T15:35:00-00:00...storm...332DEG...12KT...33.77,-94.77"
+                    ],
+                    "maxWindGust": [
+                        "40 MPH"
+                    ],
+                    "maxHailSize": [
+                        "0.50"
+                    ],
+                    "BLOCKCHANNEL": [
+                        "EAS",
+                        "NWEM",
+                        "CMAS"
+                    ],
+                    "EAS-ORG": [
+                        "WXR"
+                    ]
+                },
+                "scope": "Public",
+                "code": "IPAWSv1.0",
+                "language": "en-US",
+                "web": "http://www.weather.gov",
+                "eventCode": {
+                    "SAME": [
+                        "SPS"
+                    ],
+                    "NationalWeatherService": [
+                        "SPS"
+                    ]
+                }
+            }
+        },
+        {
+            "id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.c94b1e2d859083b127141f42567c45e11dcec91c.002.1",
+            "type": "Feature",
+            "geometry": null,
+            "properties": {
+                "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.c94b1e2d859083b127141f42567c45e11dcec91c.002.1",
+                "@type": "wx:Alert",
+                "id": "urn:oid:2.49.0.1.840.0.c94b1e2d859083b127141f42567c45e11dcec91c.002.1",
+                "areaDesc": "Palo Duro Canyon",
+                "geocode": {
+                    "SAME": [
+                        "048381"
+                    ],
+                    "UGC": [
+                        "TXZ317"
+                    ]
+                },
+                "affectedZones": [
+                    "https://api.weather.gov/zones/forecast/TXZ317"
+                ],
+                "references": [
+                    {
+                        "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.eb7726a00ab788c2b54c1a57004767af0b81df4a.001.1",
+                        "identifier": "urn:oid:2.49.0.1.840.0.eb7726a00ab788c2b54c1a57004767af0b81df4a.001.1",
+                        "sender": "w-nws.webmaster@noaa.gov",
+                        "sent": "2026-08-08T07:13:00-05:00"
+                    }
+                ],
+                "sent": "2026-08-08T09:27:00-05:00",
+                "effective": "2026-08-08T09:27:00-05:00",
+                "onset": "2026-08-08T12:00:00-05:00",
+                "expires": "2026-08-08T21:00:00-05:00",
+                "ends": "2026-08-08T21:00:00-05:00",
+                "status": "Actual",
+                "messageType": "Update",
+                "category": "Met",
+                "severity": "Moderate",
+                "certainty": "Likely",
+                "urgency": "Expected",
+                "event": "Heat Advisory",
+                "sender": "w-nws.webmaster@noaa.gov",
+                "senderName": "NWS Amarillo TX",
+                "headline": "Heat Advisory issued August 8 at 9:27AM CDT until August 8 at 9:00PM CDT by NWS Amarillo TX",
+                "description": "* WHAT...Temperatures and heat index values up to 106 expected.\n\n* WHERE...Palo Duro Canyon.\n\n* WHEN...Until 9 PM CDT this evening.\n\n* IMPACTS...Hot temperatures and high humidity may cause heat\nillnesses.",
+                "instruction": "Drink plenty of fluids, stay in an air-conditioned room, stay out of\nthe sun, and check up on relatives and neighbors.\n\nTake extra precautions when outside. Wear lightweight and loose\nfitting clothing. Try to limit strenuous activities to early morning\nor evening. Take action when you see symptoms of heat exhaustion and\nheat stroke.",
+                "response": "Execute",
+                "note": null,
+                "parameters": {
+                    "AWIPSidentifier": [
+                        "NPWAMA"
+                    ],
+                    "WMOidentifier": [
+                        "WWUS74 KAMA 081427"
+                    ],
+                    "NWSheadline": [
+                        "HEAT ADVISORY REMAINS IN EFFECT UNTIL 9 PM CDT THIS EVENING"
+                    ],
+                    "BLOCKCHANNEL": [
+                        "EAS",
+                        "NWEM",
+                        "CMAS"
+                    ],
+                    "VTEC": [
+                        "/O.CON.KAMA.HT.Y.0032.260808T1700Z-260809T0200Z/"
+                    ],
+                    "eventEndingTime": [
+                        "2026-08-08T21:00:00-05:00"
+                    ],
+                    "expiredReferences": [
+                        "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.72fc528aec4b74ed29532bbe610d1a13c0bebe34.001.1,2026-08-07T23:05:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.19b3e90554858c5d92c0bde9ee8d73fc20eb1860.001.1,2026-08-07T11:49:00-05:00"
+                    ]
+                },
+                "scope": "Public",
+                "code": "IPAWSv1.0",
+                "language": "en-US",
+                "web": "http://www.weather.gov",
+                "eventCode": {
+                    "SAME": [
+                        "NWS"
+                    ],
+                    "NationalWeatherService": [
+                        "HTY"
+                    ]
+                }
+            }
+        },
+        {
+            "id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.c94b1e2d859083b127141f42567c45e11dcec91c.001.1",
+            "type": "Feature",
+            "geometry": null,
+            "properties": {
+                "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.c94b1e2d859083b127141f42567c45e11dcec91c.001.1",
+                "@type": "wx:Alert",
+                "id": "urn:oid:2.49.0.1.840.0.c94b1e2d859083b127141f42567c45e11dcec91c.001.1",
+                "areaDesc": "Texas; Beaver; Hansford; Ochiltree; Lipscomb; Hutchinson; Roberts; Hemphill; Gray; Wheeler; Collingsworth",
+                "geocode": {
+                    "SAME": [
+                        "040139",
+                        "040007",
+                        "048195",
+                        "048357",
+                        "048295",
+                        "048233",
+                        "048393",
+                        "048211",
+                        "048179",
+                        "048483",
+                        "048087"
+                    ],
+                    "UGC": [
+                        "OKZ002",
+                        "OKZ003",
+                        "TXZ003",
+                        "TXZ004",
+                        "TXZ005",
+                        "TXZ008",
+                        "TXZ009",
+                        "TXZ010",
+                        "TXZ014",
+                        "TXZ015",
+                        "TXZ020"
+                    ]
+                },
+                "affectedZones": [
+                    "https://api.weather.gov/zones/forecast/OKZ002",
+                    "https://api.weather.gov/zones/forecast/OKZ003",
+                    "https://api.weather.gov/zones/forecast/TXZ003",
+                    "https://api.weather.gov/zones/forecast/TXZ004",
+                    "https://api.weather.gov/zones/forecast/TXZ005",
+                    "https://api.weather.gov/zones/forecast/TXZ008",
+                    "https://api.weather.gov/zones/forecast/TXZ009",
+                    "https://api.weather.gov/zones/forecast/TXZ010",
+                    "https://api.weather.gov/zones/forecast/TXZ014",
+                    "https://api.weather.gov/zones/forecast/TXZ015",
+                    "https://api.weather.gov/zones/forecast/TXZ020"
+                ],
+                "references": [],
+                "sent": "2026-08-08T09:27:00-05:00",
+                "effective": "2026-08-08T09:27:00-05:00",
+                "onset": "2026-08-08T12:00:00-05:00",
+                "expires": "2026-08-08T21:00:00-05:00",
+                "ends": "2026-08-08T21:00:00-05:00",
+                "status": "Actual",
+                "messageType": "Alert",
+                "category": "Met",
+                "severity": "Moderate",
+                "certainty": "Likely",
+                "urgency": "Expected",
+                "event": "Heat Advisory",
+                "sender": "w-nws.webmaster@noaa.gov",
+                "senderName": "NWS Amarillo TX",
+                "headline": "Heat Advisory issued August 8 at 9:27AM CDT until August 8 at 9:00PM CDT by NWS Amarillo TX",
+                "description": "* WHAT...Temperatures and heat index values up to 106 expected.\n\n* WHERE...Portions of the Panhandle of Oklahoma and the Panhandle of\nTexas.\n\n* WHEN...Until 9 PM CDT this evening.\n\n* IMPACTS...Hot temperatures and high humidity may cause heat\nillnesses.",
+                "instruction": "Drink plenty of fluids, stay in an air-conditioned room, stay out of\nthe sun, and check up on relatives and neighbors.\n\nTake extra precautions when outside. Wear lightweight and loose\nfitting clothing. Try to limit strenuous activities to early morning\nor evening. Take action when you see symptoms of heat exhaustion and\nheat stroke.",
+                "response": "Execute",
+                "note": null,
+                "parameters": {
+                    "AWIPSidentifier": [
+                        "NPWAMA"
+                    ],
+                    "WMOidentifier": [
+                        "WWUS74 KAMA 081427"
+                    ],
+                    "NWSheadline": [
+                        "HEAT ADVISORY IN EFFECT UNTIL 9 PM CDT THIS EVENING"
+                    ],
+                    "BLOCKCHANNEL": [
+                        "EAS",
+                        "NWEM",
+                        "CMAS"
+                    ],
+                    "VTEC": [
+                        "/O.EXA.KAMA.HT.Y.0032.260808T1700Z-260809T0200Z/"
+                    ],
+                    "eventEndingTime": [
+                        "2026-08-08T21:00:00-05:00"
+                    ]
+                },
+                "scope": "Public",
+                "code": "IPAWSv1.0",
+                "language": "en-US",
+                "web": "http://www.weather.gov",
+                "eventCode": {
+                    "SAME": [
+                        "NWS"
+                    ],
+                    "NationalWeatherService": [
+                        "HTY"
+                    ]
+                }
+            }
+        },
+        {
+            "id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.258013fc9b5016497e67cd825700cf2887fa32ad.001.1",
+            "type": "Feature",
+            "geometry": null,
+            "properties": {
+                "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.258013fc9b5016497e67cd825700cf2887fa32ad.001.1",
+                "@type": "wx:Alert",
+                "id": "urn:oid:2.49.0.1.840.0.258013fc9b5016497e67cd825700cf2887fa32ad.001.1",
+                "areaDesc": "Harper; Ellis; Woodward; Roger Mills; Dewey; Custer; Beckham; Washita; Knox",
+                "geocode": {
+                    "SAME": [
+                        "040059",
+                        "040045",
+                        "040153",
+                        "040129",
+                        "040043",
+                        "040039",
+                        "040009",
+                        "040149",
+                        "048275"
+                    ],
+                    "UGC": [
+                        "OKZ004",
+                        "OKZ009",
+                        "OKZ010",
+                        "OKZ014",
+                        "OKZ015",
+                        "OKZ016",
+                        "OKZ021",
+                        "OKZ022",
+                        "TXZ087"
+                    ]
+                },
+                "affectedZones": [
+                    "https://api.weather.gov/zones/forecast/OKZ004",
+                    "https://api.weather.gov/zones/forecast/OKZ009",
+                    "https://api.weather.gov/zones/forecast/OKZ010",
+                    "https://api.weather.gov/zones/forecast/OKZ014",
+                    "https://api.weather.gov/zones/forecast/OKZ015",
+                    "https://api.weather.gov/zones/forecast/OKZ016",
+                    "https://api.weather.gov/zones/forecast/OKZ021",
+                    "https://api.weather.gov/zones/forecast/OKZ022",
+                    "https://api.weather.gov/zones/forecast/TXZ087"
+                ],
+                "references": [],
+                "sent": "2026-08-08T09:14:00-05:00",
+                "effective": "2026-08-08T09:14:00-05:00",
+                "onset": "2026-08-08T12:00:00-05:00",
+                "expires": "2026-08-08T20:00:00-05:00",
+                "ends": "2026-08-08T20:00:00-05:00",
+                "status": "Actual",
+                "messageType": "Alert",
+                "category": "Met",
+                "severity": "Moderate",
+                "certainty": "Likely",
+                "urgency": "Expected",
+                "event": "Heat Advisory",
+                "sender": "w-nws.webmaster@noaa.gov",
+                "senderName": "NWS Norman OK",
+                "headline": "Heat Advisory issued August 8 at 9:14AM CDT until August 8 at 8:00PM CDT by NWS Norman OK",
+                "description": "* WHAT...Heat index values up to 106 expected.\n\n* WHERE...In Oklahoma, Dewey, Ellis, Harper, Woodward, Beckham,\nCuster, Roger Mills, and Washita Counties. In Texas, Knox County.\n\n* WHEN...Until 8 PM CDT this evening.\n\n* IMPACTS...Hot temperatures and high humidity may cause heat\nillnesses.",
+                "instruction": "Drink plenty of fluids, stay in an air-conditioned room, stay out of\nthe sun, and check up on relatives and neighbors.",
+                "response": "Execute",
+                "note": null,
+                "parameters": {
+                    "AWIPSidentifier": [
+                        "NPWOUN"
+                    ],
+                    "WMOidentifier": [
+                        "WWUS74 KOUN 081414"
+                    ],
+                    "NWSheadline": [
+                        "HEAT ADVISORY IN EFFECT UNTIL 8 PM CDT THIS EVENING"
+                    ],
+                    "BLOCKCHANNEL": [
+                        "EAS",
+                        "NWEM",
+                        "CMAS"
+                    ],
+                    "VTEC": [
+                        "/O.EXA.KOUN.HT.Y.0030.260808T1700Z-260809T0100Z/"
+                    ],
+                    "eventEndingTime": [
+                        "2026-08-08T20:00:00-05:00"
+                    ]
+                },
+                "scope": "Public",
+                "code": "IPAWSv1.0",
+                "language": "en-US",
+                "web": "http://www.weather.gov",
+                "eventCode": {
+                    "SAME": [
+                        "NWS"
+                    ],
+                    "NationalWeatherService": [
+                        "HTY"
+                    ]
+                }
+            }
+        },
+        {
+            "id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.258013fc9b5016497e67cd825700cf2887fa32ad.002.1",
+            "type": "Feature",
+            "geometry": null,
+            "properties": {
+                "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.258013fc9b5016497e67cd825700cf2887fa32ad.002.1",
+                "@type": "wx:Alert",
+                "id": "urn:oid:2.49.0.1.840.0.258013fc9b5016497e67cd825700cf2887fa32ad.002.1",
+                "areaDesc": "Woods; Alfalfa; Grant; Kay; Major; Garfield; Noble; Blaine; Kingfisher; Logan; Payne; Caddo; Canadian; Oklahoma; Lincoln; Grady; McClain; Cleveland; Pottawatomie; Seminole; Hughes; Harmon; Greer; Kiowa; Jackson; Tillman; Comanche; Stephens; Garvin; Murray; Pontotoc; Coal; Cotton; Jefferson; Carter; Johnston; Atoka; Love; Marshall; Bryan; Hardeman; Foard; Wilbarger; Wichita; Baylor; Archer; Clay",
+                "geocode": {
+                    "SAME": [
+                        "040151",
+                        "040003",
+                        "040053",
+                        "040071",
+                        "040093",
+                        "040047",
+                        "040103",
+                        "040011",
+                        "040073",
+                        "040083",
+                        "040119",
+                        "040015",
+                        "040017",
+                        "040109",
+                        "040081",
+                        "040051",
+                        "040087",
+                        "040027",
+                        "040125",
+                        "040133",
+                        "040063",
+                        "040057",
+                        "040055",
+                        "040075",
+                        "040065",
+                        "040141",
+                        "040031",
+                        "040137",
+                        "040049",
+                        "040099",
+                        "040123",
+                        "040029",
+                        "040033",
+                        "040067",
+                        "040019",
+                        "040069",
+                        "040005",
+                        "040085",
+                        "040095",
+                        "040013",
+                        "048197",
+                        "048155",
+                        "048487",
+                        "048485",
+                        "048023",
+                        "048009",
+                        "048077"
+                    ],
+                    "UGC": [
+                        "OKZ005",
+                        "OKZ006",
+                        "OKZ007",
+                        "OKZ008",
+                        "OKZ011",
+                        "OKZ012",
+                        "OKZ013",
+                        "OKZ017",
+                        "OKZ018",
+                        "OKZ019",
+                        "OKZ020",
+                        "OKZ023",
+                        "OKZ024",
+                        "OKZ025",
+                        "OKZ026",
+                        "OKZ027",
+                        "OKZ028",
+                        "OKZ029",
+                        "OKZ030",
+                        "OKZ031",
+                        "OKZ032",
+                        "OKZ033",
+                        "OKZ034",
+                        "OKZ035",
+                        "OKZ036",
+                        "OKZ037",
+                        "OKZ038",
+                        "OKZ039",
+                        "OKZ040",
+                        "OKZ041",
+                        "OKZ042",
+                        "OKZ043",
+                        "OKZ044",
+                        "OKZ045",
+                        "OKZ046",
+                        "OKZ047",
+                        "OKZ048",
+                        "OKZ050",
+                        "OKZ051",
+                        "OKZ052",
+                        "TXZ083",
+                        "TXZ084",
+                        "TXZ085",
+                        "TXZ086",
+                        "TXZ088",
+                        "TXZ089",
+                        "TXZ090"
+                    ]
+                },
+                "affectedZones": [
+                    "https://api.weather.gov/zones/forecast/OKZ005",
+                    "https://api.weather.gov/zones/forecast/OKZ006",
+                    "https://api.weather.gov/zones/forecast/OKZ007",
+                    "https://api.weather.gov/zones/forecast/OKZ008",
+                    "https://api.weather.gov/zones/forecast/OKZ011",
+                    "https://api.weather.gov/zones/forecast/OKZ012",
+                    "https://api.weather.gov/zones/forecast/OKZ013",
+                    "https://api.weather.gov/zones/forecast/OKZ017",
+                    "https://api.weather.gov/zones/forecast/OKZ018",
+                    "https://api.weather.gov/zones/forecast/OKZ019",
+                    "https://api.weather.gov/zones/forecast/OKZ020",
+                    "https://api.weather.gov/zones/forecast/OKZ023",
+                    "https://api.weather.gov/zones/forecast/OKZ024",
+                    "https://api.weather.gov/zones/forecast/OKZ025",
+                    "https://api.weather.gov/zones/forecast/OKZ026",
+                    "https://api.weather.gov/zones/forecast/OKZ027",
+                    "https://api.weather.gov/zones/forecast/OKZ028",
+                    "https://api.weather.gov/zones/forecast/OKZ029",
+                    "https://api.weather.gov/zones/forecast/OKZ030",
+                    "https://api.weather.gov/zones/forecast/OKZ031",
+                    "https://api.weather.gov/zones/forecast/OKZ032",
+                    "https://api.weather.gov/zones/forecast/OKZ033",
+                    "https://api.weather.gov/zones/forecast/OKZ034",
+                    "https://api.weather.gov/zones/forecast/OKZ035",
+                    "https://api.weather.gov/zones/forecast/OKZ036",
+                    "https://api.weather.gov/zones/forecast/OKZ037",
+                    "https://api.weather.gov/zones/forecast/OKZ038",
+                    "https://api.weather.gov/zones/forecast/OKZ039",
+                    "https://api.weather.gov/zones/forecast/OKZ040",
+                    "https://api.weather.gov/zones/forecast/OKZ041",
+                    "https://api.weather.gov/zones/forecast/OKZ042",
+                    "https://api.weather.gov/zones/forecast/OKZ043",
+                    "https://api.weather.gov/zones/forecast/OKZ044",
+                    "https://api.weather.gov/zones/forecast/OKZ045",
+                    "https://api.weather.gov/zones/forecast/OKZ046",
+                    "https://api.weather.gov/zones/forecast/OKZ047",
+                    "https://api.weather.gov/zones/forecast/OKZ048",
+                    "https://api.weather.gov/zones/forecast/OKZ050",
+                    "https://api.weather.gov/zones/forecast/OKZ051",
+                    "https://api.weather.gov/zones/forecast/OKZ052",
+                    "https://api.weather.gov/zones/forecast/TXZ083",
+                    "https://api.weather.gov/zones/forecast/TXZ084",
+                    "https://api.weather.gov/zones/forecast/TXZ085",
+                    "https://api.weather.gov/zones/forecast/TXZ086",
+                    "https://api.weather.gov/zones/forecast/TXZ088",
+                    "https://api.weather.gov/zones/forecast/TXZ089",
+                    "https://api.weather.gov/zones/forecast/TXZ090"
+                ],
+                "references": [
+                    {
+                        "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.2930a09aae787c31f9cd1b67290b874732776569.001.1",
+                        "identifier": "urn:oid:2.49.0.1.840.0.2930a09aae787c31f9cd1b67290b874732776569.001.1",
+                        "sender": "w-nws.webmaster@noaa.gov",
+                        "sent": "2026-08-07T20:33:00-05:00"
+                    },
+                    {
+                        "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.5da1240ace1b48ff89d5d0fe671865a1eff5ead5.001.1",
+                        "identifier": "urn:oid:2.49.0.1.840.0.5da1240ace1b48ff89d5d0fe671865a1eff5ead5.001.1",
+                        "sender": "w-nws.webmaster@noaa.gov",
+                        "sent": "2026-08-08T01:27:00-05:00"
+                    },
+                    {
+                        "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.5da1240ace1b48ff89d5d0fe671865a1eff5ead5.002.1",
+                        "identifier": "urn:oid:2.49.0.1.840.0.5da1240ace1b48ff89d5d0fe671865a1eff5ead5.002.1",
+                        "sender": "w-nws.webmaster@noaa.gov",
+                        "sent": "2026-08-08T01:27:00-05:00"
+                    }
+                ],
+                "sent": "2026-08-08T09:14:00-05:00",
+                "effective": "2026-08-08T09:14:00-05:00",
+                "onset": "2026-08-08T12:00:00-05:00",
+                "expires": "2026-08-08T20:00:00-05:00",
+                "ends": "2026-08-08T20:00:00-05:00",
+                "status": "Actual",
+                "messageType": "Update",
+                "category": "Met",
+                "severity": "Moderate",
+                "certainty": "Likely",
+                "urgency": "Expected",
+                "event": "Heat Advisory",
+                "sender": "w-nws.webmaster@noaa.gov",
+                "senderName": "NWS Norman OK",
+                "headline": "Heat Advisory issued August 8 at 9:14AM CDT until August 8 at 8:00PM CDT by NWS Norman OK",
+                "description": "* WHAT...Heat index values up to 110 expected.\n\n* WHERE...Portions of central, east central, northern, northwest,\nsoutheast, southern, and southwest Oklahoma and northern Texas.\n\n* WHEN...Until 8 PM CDT this evening.\n\n* IMPACTS...Hot temperatures and high humidity may cause heat\nillnesses.",
+                "instruction": "Drink plenty of fluids, stay in an air-conditioned room, stay out of\nthe sun, and check up on relatives and neighbors.",
+                "response": "Execute",
+                "note": null,
+                "parameters": {
+                    "AWIPSidentifier": [
+                        "NPWOUN"
+                    ],
+                    "WMOidentifier": [
+                        "WWUS74 KOUN 081414"
+                    ],
+                    "NWSheadline": [
+                        "HEAT ADVISORY REMAINS IN EFFECT UNTIL 8 PM CDT THIS EVENING"
+                    ],
+                    "BLOCKCHANNEL": [
+                        "EAS",
+                        "NWEM",
+                        "CMAS"
+                    ],
+                    "VTEC": [
+                        "/O.CON.KOUN.HT.Y.0030.260808T1700Z-260809T0100Z/"
+                    ],
+                    "eventEndingTime": [
+                        "2026-08-08T20:00:00-05:00"
+                    ],
+                    "expiredReferences": [
+                        "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.03e1ad7446159c2684e4f3017c9dab02a8e70931.003.1,2026-08-07T17:04:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.03e1ad7446159c2684e4f3017c9dab02a8e70931.002.2,2026-08-07T17:04:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.03e1ad7446159c2684e4f3017c9dab02a8e70931.001.2,2026-08-07T17:04:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d879323be4ebfc0dd69333d0219dc3db97d83244.003.1,2026-08-07T14:52:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d879323be4ebfc0dd69333d0219dc3db97d83244.002.2,2026-08-07T14:52:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d879323be4ebfc0dd69333d0219dc3db97d83244.001.2,2026-08-07T14:52:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.04d71acdf774597ce49ceb0c45cb9db94615fbd1.002.1,2026-08-07T11:45:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.04d71acdf774597ce49ceb0c45cb9db94615fbd1.001.1,2026-08-07T11:45:00-05:00"
+                    ]
+                },
+                "scope": "Public",
+                "code": "IPAWSv1.0",
+                "language": "en-US",
+                "web": "http://www.weather.gov",
+                "eventCode": {
+                    "SAME": [
+                        "NWS"
+                    ],
+                    "NationalWeatherService": [
+                        "HTY"
+                    ]
+                }
+            }
+        },
+        {
+            "id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.02aa56307f6319b87aaa3f9fb059fedf8cb7b3e5.001.1",
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -98.8,
+                            28.17
+                        ],
+                        [
+                            -98.59,
+                            28.36
+                        ],
+                        [
+                            -98.33,
+                            28.45
+                        ],
+                        [
+                            -98.33,
+                            28.33
+                        ],
+                        [
+                            -98.54,
+                            28.26
+                        ],
+                        [
+                            -98.8,
+                            28.07
+                        ],
+                        [
+                            -98.8,
+                            28.17
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.02aa56307f6319b87aaa3f9fb059fedf8cb7b3e5.001.1",
+                "@type": "wx:Alert",
+                "id": "urn:oid:2.49.0.1.840.0.02aa56307f6319b87aaa3f9fb059fedf8cb7b3e5.001.1",
+                "areaDesc": "McMullen, TX",
+                "geocode": {
+                    "SAME": [
+                        "048311"
+                    ],
+                    "UGC": [
+                        "TXC311"
+                    ]
+                },
+                "affectedZones": [
+                    "https://api.weather.gov/zones/county/TXC311"
+                ],
+                "references": [
+                    {
+                        "@id": "https://api.weather.gov/alerts/urn:oid:2.49.0.1.840.0.4012e8981516f4acc66aaf3deb0be40ca8d1a929.001.1",
+                        "identifier": "urn:oid:2.49.0.1.840.0.4012e8981516f4acc66aaf3deb0be40ca8d1a929.001.1",
+                        "sender": "w-nws.webmaster@noaa.gov",
+                        "sent": "2026-08-07T20:14:00-05:00"
+                    }
+                ],
+                "sent": "2026-08-08T08:45:00-05:00",
+                "effective": "2026-08-08T08:45:00-05:00",
+                "onset": "2026-08-08T08:45:00-05:00",
+                "expires": "2026-08-09T01:00:00-05:00",
+                "ends": "2026-08-09T17:00:00-05:00",
+                "status": "Actual",
+                "messageType": "Update",
+                "category": "Met",
+                "severity": "Severe",
+                "certainty": "Observed",
+                "urgency": "Immediate",
+                "event": "Flood Warning",
+                "sender": "w-nws.webmaster@noaa.gov",
+                "senderName": "NWS Corpus Christi TX",
+                "headline": "Flood Warning issued August 8 at 8:45AM CDT until August 9 at 5:00PM CDT by NWS Corpus Christi TX",
+                "description": "...The Flood Warning is extended for the following rivers in Texas...\n\nNueces River Near Tilden affecting McMullen County.\n\nFor the Nueces River...including Cotulla, Tilden, Three Rivers,\nMathis, Bluntzer, Calallen...Minor flooding is forecast.\n\n- Forecast...The river is expected to fall below flood stage just\nafter midnight tonight and continue falling to 8.1 feet Thursday\nmorning.\n- Flood stage is 14.0 feet.\n- http://www.weather.gov/safety/flood",
+                "instruction": "Turn around, don't drown when encountering flooded roads. Most flood\ndeaths occur in vehicles.\n\nMotorists should not attempt to drive around barricades or drive cars\nthrough flooded areas.\n\nCaution is urged when walking near riverbanks.\n\nEven 6 inches of fast-moving flood water can knock you off your feet\nand a depth of 2 feet will float your car. Never try to walk, swim,\nor drive through such swift water. If you come upon flood waters,\nstop, turn around and go another way.\n\nAdditional information is available at www.weather.gov/crp.",
+                "response": "Avoid",
+                "note": null,
+                "parameters": {
+                    "AWIPSidentifier": [
+                        "FLSCRP"
+                    ],
+                    "WMOidentifier": [
+                        "WGUS84 KCRP 081345"
+                    ],
+                    "BLOCKCHANNEL": [
+                        "EAS",
+                        "NWEM",
+                        "CMAS"
+                    ],
+                    "EAS-ORG": [
+                        "WXR"
+                    ],
+                    "VTEC": [
+                        "/O.EXT.KCRP.FL.W.0026.000000T0000Z-260809T2200Z/"
+                    ],
+                    "eventEndingTime": [
+                        "2026-08-09T17:00:00-05:00"
+                    ],
+                    "expiredReferences": [
+                        "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a4006eb38dda81396de878a3ee30877db05dc184.001.1,2026-08-07T08:43:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.422f915b9c8698a61ceeecbb773519636c1559f0.001.1,2026-08-06T20:04:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.6c086fb0cb122a2dcaad2d633e16163ca1e2f740.002.1,2026-08-06T08:31:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.cd351168adba7b138d4b2fd5b257e34ba80d69c4.002.1,2026-08-05T19:53:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.15a54361c4ea7596611f53154fbe235d68afe15a.002.1,2026-08-05T10:56:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.cfe0cb53516243e5682c1b93f097af5f347ba9d1.002.1,2026-08-04T20:07:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.0d85f3f3b48cc9017f55a16e1f1acf4cc74e9f0b.002.1,2026-08-04T15:51:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.52c53adf21b8a3c6773f1bc49de7351006f6e777.002.1,2026-08-04T08:54:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.1890e16dec93bc7bd2c40c556f7d88b51dfba240.002.1,2026-08-03T20:13:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.6c2d46f696ba508a8268a87165a57be61f4e50bb.002.1,2026-08-03T09:17:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a89341f8395f18ac2219ce1a412989c19cd5d270.002.1,2026-08-02T20:24:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.135a0f1988967bd17c986e8c8d19aa89231c27b7.002.1,2026-08-02T14:39:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.1b543241930cc661baf187477778f4d98e6501dc.001.1,2026-08-02T08:25:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b4d720713368e37fddd68843d1aab38758412622.002.1,2026-08-01T21:13:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.834ebd4dcc1f9da07a1c948db52c7fb5bc91db0a.002.1,2026-08-01T15:19:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.41998741dc0d72c08eee8a810027a4a5335324d0.002.1,2026-08-01T08:24:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.7ba1f287abb4b900fa791efd10f9e96fcc507b5b.002.1,2026-07-31T21:52:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a7baff553c95b209282975fe25e7894797faf8a6.002.1,2026-07-31T14:30:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.1a14d2c7263d87b5fdaf9e0ecbc30ccb92c9268a.002.1,2026-07-31T08:04:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.41159ac2cb5b27fd0c526d45c34182e3df876e09.002.1,2026-07-30T20:05:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.04518cb9ebf1c925cd63116cf1de61d3cbd35ab1.002.1,2026-07-30T14:05:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.26a5fa0ef8c3dace3ffbf5a03c5c00efad8a9d63.002.1,2026-07-30T09:13:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.49dc0c7d784c8f977fd515869c181631bc54704e.002.1,2026-07-29T20:29:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.392fa23457d2ea6239db23562a492e33ecbec98f.002.1,2026-07-29T14:27:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.e6edf428d2a81b815d946c695ee48d84461a7d37.002.1,2026-07-29T08:50:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b5452784d37c3d3435aed3d153e99261cd4d041c.002.1,2026-07-28T20:43:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.90cfd6f0503596862be6e3d9169a8b80f15a4956.003.1,2026-07-28T08:41:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.c4ed71208603bae662751caf0b271fca39af14f2.003.1,2026-07-27T20:00:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.46b84077eabda17293ccf2de90228841541236cd.003.1,2026-07-27T14:37:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.cf19fc5b7d820745ecb46e4be4a7f500f8617f73.003.1,2026-07-27T07:53:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.9f00332e6f851372467052577549896a2492284d.003.1,2026-07-26T19:46:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.5423de5d099c7a0d02610fc2314902d74e675ae8.002.1,2026-07-26T13:49:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.39e382e6deab445724e1e4c9b42bc4fcb70b74d3.002.1,2026-07-26T08:31:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.bfa8c142cd901a1867619d778fbeec1f114bd275.002.1,2026-07-25T20:00:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.88816dbd935c2866eb042bf45027e30307a46ff9.001.1,2026-07-25T14:28:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.4efedba84e2a31c8fdcb97a0a5e714806ff0f992.001.1,2026-07-25T08:33:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.8555eef8d1588af7295bf909d8774d1eafd4073e.001.1,2026-07-24T20:24:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.97217caf059e0b7160c59824cb45aa2e646eeb27.001.1,2026-07-24T13:48:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.5c132706092e06d5e548fd4a235e9fda3666cdbe.002.1,2026-07-24T08:30:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d278766dd0d0cecf012a468d6c576a9177f7191e.002.1,2026-07-23T20:04:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.59cad0364f0732e45323a39921d8027395e17f88.001.1,2026-07-23T08:56:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.ba803329e7c6c8d9187a8244a836cc25e16152e1.002.1,2026-07-22T20:17:00-05:00 w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b100b5280f6e5e274aca486168c303f6743c3bf9.001.1,2026-07-22T09:43:00-05:00"
+                    ]
+                },
+                "scope": "Public",
+                "code": "IPAWSv1.0",
+                "language": "en-US",
+                "web": "http://www.weather.gov",
+                "eventCode": {
+                    "SAME": [
+                        "FLS"
+                    ],
+                    "NationalWeatherService": [
+                        "FLW"
+                    ]
+                }
+            }
+        }
+    ],
+    "title": "Current watches, warnings, and advisories for Texas",
+    "updated": "2026-08-08T16:26:22+00:00"
+}

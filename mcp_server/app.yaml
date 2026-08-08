@@ -1,0 +1,37 @@
+# Databricks Apps deployment config for the SkyCast-AI MCP server.
+#
+# No credential appears here. The one sensitive value - the contact address
+# api.weather.gov requires - is resolved at runtime from the secret scope named
+# below. Run setup_secrets.py once before the first deploy.
+
+command:
+  - "python"
+  - "weather_mcp_server.py"
+
+env:
+  # Secret scopes are workspace-wide, so a generic name like "database" may
+  # already exist and belong to someone else - and a scope you do not own
+  # cannot be written to. Hence the project-specific name.
+  - name: WEATHER_SECRET_SCOPE
+    value: "lubo-skycast"
+  - name: WEATHER_SECRET_KEY
+    value: "nws-user-agent"
+
+  # Fallback identity, used only if the secret cannot be read. Deliberately
+  # carries no personal address: a generic contact is better than a 403, and
+  # far better than a real email address committed to a public repo.
+  - name: NWS_USER_AGENT_FALLBACK
+    value: "(SkyCast-AI, bootcamp project, contact via GitHub lubobali/SkyCast-AI)"
+
+  # api.weather.gov publishes no hard numeric rate limit; it asks for
+  # reasonable use and throttles clients that abuse it. Pacing deliberately
+  # rather than discovering the limit by being throttled.
+  - name: NWS_MAX_REQUESTS_PER_SECOND
+    value: "4"
+
+  # Ceiling on get_forecast(days=...). Open-Meteo serves up to 16.
+  - name: MAX_FORECAST_DAYS
+    value: "16"
+
+  - name: LOG_LEVEL
+    value: "INFO"

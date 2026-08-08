@@ -1,0 +1,5 @@
+# Test-only dependencies. Not installed by the deployed Databricks App.
+-r mcp_server/requirements.txt
+
+pytest>=8.2.0
+ruff>=0.6.0
