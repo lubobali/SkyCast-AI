@@ -1,0 +1,43 @@
+Connected to http://127.0.0.1:8399/mcp
+5 tools discovered:
+
+  compare_cities               Compare the forecast and outdoor advice across several US locations.
+  get_current_weather          Get the weather conditions right now at a US location.
+  get_forecast                 Get a day-by-day weather forecast for a US location.
+  get_outdoor_recommendation   Decide whether to take an umbrella, a jacket, or sunscreen, and whether
+  get_severe_weather_alerts    Get active National Weather Service alerts covering a US location.
+
+------------------------------------------------------------------------------
+
+get_current_weather(location='Chicago, IL')
+  conditions: Clear sky
+  temperature_f: 79.2
+
+get_forecast(location='Austin, TX', days=3)
+  2026-08-08  Overcast                       98.9/76.2F  rain 2%
+  2026-08-09  Overcast                       97.2/77.8F  rain 3%
+  2026-08-10  Partly cloudy                  102.6/77.2F  rain 4%
+
+get_outdoor_recommendation(location='Denver, CO')
+  summary: Take sunscreen. Outdoor plans are workable with care.
+  conditions: Overcast
+
+get_severe_weather_alerts(location='Miami, FL')
+  count: 0
+
+compare_cities(locations=['Chicago, IL', 'Miami, FL'])
+  compared: 2
+  Chicago, IL          good       Take sunscreen. Good conditions for being outside.
+  Miami, FL            good       Take sunscreen. Good conditions for being outside.
+
+get_current_weather(location='Springfield')
+  error [bad_request]: Could not read 'Springfield' as a location. Use 'City, ST' (for example 'Chicago, IL') or 'lat,lon' (for example '41.88,-87.63').
+
+get_current_weather(location='Toronto, Ontario')
+  error [bad_request]: 'Ontario' is not a US state or territory (from 'Toronto, Ontario'). This server covers the United States only.
+
+get_outdoor_recommendation(location='Chicago, IL', date='tomorrow')
+  error [bad_request]: Could not read 'tomorrow' as a date. Use YYYY-MM-DD, for example '2026-08-09'. Relative words like 'tomorrow' are not accepted here - call get_forecast and read the dates it returns.
+
+------------------------------------------------------------------------------
+every tool returned a result

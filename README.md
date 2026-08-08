@@ -239,8 +239,11 @@ python scripts/smoke_test.py --url https://<app>.databricksapps.com/mcp
 ## The agent
 
 The system prompt is checked in at
-[`agent/system_prompt.md`](agent/system_prompt.md), so the agent's behaviour is
-versioned next to the tools it calls instead of living only in a web form.
+[`agent/system_prompt.md`](agent/system_prompt.md), and the rest of the agent's
+configuration - type, model, attached MCP, tool list, and the demo transcripts -
+at [`agent/agent_config.md`](agent/agent_config.md). Both are in the repo so the
+agent's behaviour is versioned next to the tools it calls, rather than living
+only in a web form that nobody can diff.
 
 It covers what the homework asks for — what the agent does, which tools to call
 in what order, and guardrails — and the guardrails are specific rather than
@@ -262,7 +265,8 @@ aspirational:
 ### Demonstration
 
 Three natural-language questions, with the agent's tool calls and answers, are
-in [`screenshots/`](screenshots/):
+transcribed in [`agent/agent_config.md`](agent/agent_config.md#demonstration)
+and screenshotted in [`screenshots/`](screenshots/):
 
 | # | Question | Tools the agent called |
 |---|---|---|
@@ -423,21 +427,22 @@ silently change a safety verdict.
 
 | # | Requirement | Where | Evidence |
 |---|---|---|---|
-| 1 | MCP server built with FastMCP, tools via `@mcp.tool`, streamable HTTP | [`weather_mcp_server.py`](mcp_server/weather_mcp_server.py) | `screenshots/01-tools-discovered.png` |
+| 1 | MCP server built with FastMCP, tools via `@mcp.tool`, streamable HTTP | [`weather_mcp_server.py`](mcp_server/weather_mcp_server.py) | `screenshots/02-smoke-test.txt` |
 | 2 | Separate adapter module, no raw `requests` in tool functions | [`weather_provider.py`](mcp_server/weather_provider.py), [`nws_client.py`](mcp_server/nws_client.py), [`http_client.py`](mcp_server/http_client.py) | no `requests` import in the server file |
 | 3 | Secrets via `WorkspaceClient().secrets.get_secret()`, nothing committed | [`secret_store.py`](mcp_server/secret_store.py), [`setup_secrets.py`](setup_secrets.py) | `screenshots/05-secret-scope.png`, `screenshots/05b-status-secret.png` (`"nws_contact":"secret"`) |
 | 4 | `requirements.txt` + `app.yaml`, deployed as its own Databricks App | [`mcp_server/app.yaml`](mcp_server/app.yaml), [`mcp_server/requirements.txt`](mcp_server/requirements.txt) | `screenshots/04-app-running.png`, `screenshots/03-landing-page.png` |
 | 5 | Agent Bricks agent registered against the MCP as an external tool | `bootcamp_students.lubo_skycast.skycast_mcp`, agent `skycast-agent` | `screenshots/06-mcp-registered.png`, `screenshots/07-agent-config.png`. See [Two deployments](#two-deployments-and-why) |
-| 6 | Clear system prompt: purpose, tool order, guardrails | [`agent/system_prompt.md`](agent/system_prompt.md) | `screenshots/07-agent-config.png` |
+| 6 | Clear system prompt: purpose, tool order, guardrails | [`agent/system_prompt.md`](agent/system_prompt.md), [`agent/agent_config.md`](agent/agent_config.md) | `screenshots/07-agent-config.png` |
 | 7 | README: architecture, tool list, setup, API + auth used | this file | — |
-| 8 | ≥3 natural-language questions with tool calls and answers | — | `screenshots/08-q1-chicago-rain.png`, `09-q2-austin-jacket.png`, `10-q3-denver-miami-drive.png` |
-| — | **Required tool 1**: current conditions | `get_current_weather` | `screenshots/02-smoke-test.png` |
-| — | **Required tool 2**: forecast | `get_forecast` | `screenshots/02-smoke-test.png` |
-| — | **Required tool 3**: prediction / recommendation | `get_outdoor_recommendation` | `screenshots/02-smoke-test.png` |
-| — | **Stretch**: severe weather alerts | `get_severe_weather_alerts` | `screenshots/02-smoke-test.png` |
-| — | **Stretch**: compare multiple cities | `compare_cities` | `screenshots/02-smoke-test.png` |
+| 8 | ≥3 natural-language questions with tool calls and answers | — | `screenshots/08-q1-chicago-and-q2-austin.png`, `screenshots/10-q3-denver-miami-drive.png`, transcribed in [`agent/agent_config.md`](agent/agent_config.md#demonstration) |
+| — | **Required tool 1**: current conditions | `get_current_weather` | `screenshots/02-smoke-test.txt` |
+| — | **Required tool 2**: forecast | `get_forecast` | `screenshots/02-smoke-test.txt` |
+| — | **Required tool 3**: prediction / recommendation | `get_outdoor_recommendation` | `screenshots/02-smoke-test.txt` |
+| — | **Stretch**: severe weather alerts | `get_severe_weather_alerts` | `screenshots/02-smoke-test.txt` |
+| — | **Stretch**: compare multiple cities | `compare_cities` | `screenshots/02-smoke-test.txt` |
 | — | Docstrings with Args / Returns | every tool | `test_every_tool_documents_args_and_returns_in_source` |
-| — | Bad location → clean error, not a stack trace | [`_failed()`](mcp_server/weather_mcp_server.py) | `screenshots/02-smoke-test.png`, `TestNothingEverRaises` |
+| — | Full test suite green, lint clean | `tests/` | `screenshots/12-tests.txt` |
+| — | Bad location → clean error, not a stack trace | [`_failed()`](mcp_server/weather_mcp_server.py) | `screenshots/02-smoke-test.txt`, `TestNothingEverRaises` |
 | — | Prediction applies a threshold and explains it in the docstring | [`recommendation.py`](mcp_server/recommendation.py) | `test_the_prediction_tool_states_its_thresholds` |
 | — | No secrets committed, no hardcoded keys | `.gitignore`, `.env.example` | neither API uses a key; see [About the secret](#about-the-secret) |
 | — | System prompt specific enough to prevent hallucinated weather | [`agent/system_prompt.md`](agent/system_prompt.md) | `screenshots/07-agent-config.png` |
@@ -461,7 +466,8 @@ SkyCast-AI/
 │   ├── app.yaml                 deploy config, nothing sensitive
 │   └── requirements.txt
 ├── agent/
-│   └── system_prompt.md         the agent's instructions, versioned
+│   ├── system_prompt.md         the agent's instructions, versioned
+│   └── agent_config.md          type, model, MCP, tool list, demo transcripts
 ├── tests/                       228 tests
 │   └── fixtures/                real recorded API responses
 ├── scripts/
