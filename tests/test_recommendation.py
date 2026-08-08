@@ -4,14 +4,14 @@
 from __future__ import annotations
 
 import pytest
-from recommendation import (  # noqa: I001
+from recommendation import (
     HEAT_CAUTION_F,
     HIGH_WIND_MPH,
     JACKET_HIGH_F,
     SUNSCREEN_UV_INDEX,
-    UNSAFE_WEATHER_CODES,
     UMBRELLA_PRECIPITATION_MM,
     UMBRELLA_PROBABILITY_PCT,
+    UNSAFE_WEATHER_CODES,
     jacket,
     outdoor_activity,
     recommend,

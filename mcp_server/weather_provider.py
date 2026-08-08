@@ -248,11 +248,15 @@ class WeatherProvider:
                 f"Could not get weather for {place.label}: {exc}"
             ) from exc
 
-    def current_conditions(self, location: str) -> dict:
+    def current_conditions(self, location: str, *, place: Place | None = None) -> dict:
         """Conditions right now at `location`.
 
         Args:
             location: "City, ST" or "lat,lon".
+            place: An already-resolved Place, to skip the geocode. A tool that
+                needs both weather and alerts resolves once and passes the
+                result to both, rather than geocoding the same city twice in
+                one call.
 
         Returns:
             A dict with temperature_f, feels_like_f, humidity_pct, conditions,
@@ -262,7 +266,7 @@ class WeatherProvider:
         Raises:
             LocationError / LocationNotFound / WeatherServiceError.
         """
-        place = self.resolve(location)
+        place = place or self.resolve(location)
         payload = self._forecast_payload(place, current=True, days=0)
         current = payload.get("current") or {}
         if not current:
@@ -286,12 +290,15 @@ class WeatherProvider:
             "is_daytime": bool(current.get("is_day")),
         }
 
-    def daily_forecast(self, location: str, days: int = 3) -> dict:
+    def daily_forecast(
+        self, location: str, days: int = 3, *, place: Place | None = None
+    ) -> dict:
         """A day-by-day forecast for `location`.
 
         Args:
             location: "City, ST" or "lat,lon".
             days: How many days, counting today. Clamped to 1..MAX_FORECAST_DAYS.
+            place: An already-resolved Place, to skip the geocode.
 
         Returns:
             A dict with the resolved place and a `days` list, each entry
@@ -303,7 +310,7 @@ class WeatherProvider:
             LocationError / LocationNotFound / WeatherServiceError.
         """
         wanted = max(1, min(int(days), MAX_FORECAST_DAYS))
-        place = self.resolve(location)
+        place = place or self.resolve(location)
         payload = self._forecast_payload(place, current=False, days=wanted)
 
         daily = payload.get("daily") or {}
