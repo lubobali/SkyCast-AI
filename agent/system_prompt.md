@@ -103,6 +103,9 @@ five were asked about is a wrong answer.
 Only United States locations. These tools cover the US and its territories. For
 anywhere else, say so plainly rather than guessing.
 
+Do not use python_exec for weather. It cannot reach the weather APIs, and any
+number it produces is invented.
+
 ## How to answer
 
 Lead with the answer, then the reason. "Yes, take an umbrella - 73% chance of
@@ -143,6 +146,13 @@ correct response to each turns it into a lookup.
 **Why "null is not zero" is stated twice.** Once in the tool docstrings, once
 here. It is the failure that produces a confident wrong answer rather than a
 visible one, and there is no cost to saying it in both places.
+
+**Why python_exec is named explicitly.** Agent Bricks attaches a Python
+interpreter to every Supervisor agent and does not allow removing it. An
+interpreter is exactly the tool a model reaches for when it wants to work
+something out itself, which is the behaviour every other line here is trying to
+prevent. Naming it, and saying why its output would be fiction, is cheaper than
+hoping it goes unnoticed.
 
 **Why the prompt says the agent has no weather knowledge of its own.** It is not
 true in a literal sense and the model knows it is not true. It is stated anyway,

@@ -5,14 +5,19 @@
 | | |
 |---|---|
 | **GitHub** | https://github.com/lubobali/SkyCast-AI |
-| **MCP server (Databricks App)** | https://skycast-ai-1352785079224954.aws.databricksapps.com/mcp |
-| **Registered MCP** | `skycast-weather`, under AI Gateway → MCPs |
-| **Agent** | `skycast-agent`, under AI Gateway → Agents |
+| **MCP server, Databricks App** | https://skycast-ai-1352785079224954.aws.databricksapps.com |
+| **MCP server, public instance** | https://skycast.lubot.ai — `/mcp` needs a bearer token |
+| **Registered MCP** | `bootcamp_students.lubo_skycast.skycast_mcp` |
+| **Agent** | `skycast-agent` (Supervisor Agent) |
 
-> The app URL is inside a Databricks workspace and requires workspace
-> authentication, so it will not open for someone who is not signed in there.
-> Screenshots in [`screenshots/`](screenshots/) show it running, the tools
-> discovered, and the agent answering.
+> The Databricks App URL requires workspace authentication and will not open for
+> someone who is not signed in there. `https://skycast.lubot.ai/` is public and
+> shows the same server's landing page and tool list.
+>
+> **Why there are two.** The App is the deployment the homework requires. The
+> AI Gateway turned out to be unable to authenticate *to* a Databricks App, so a
+> second instance of the same code runs somewhere the gateway can reach. The
+> full diagnosis is in [Two deployments](#two-deployments-and-why).
 
 Databricks AI Bootcamp, Day 3 homework. Built from the pattern in
 [`EcZachly/databricks-lakebase-app-day-3`](https://github.com/EcZachly/databricks-lakebase-app-day-3)
@@ -267,6 +272,51 @@ in [`screenshots/`](screenshots/):
 
 ---
 
+## Two deployments, and why
+
+The homework requires the MCP server to be *"deployed as its own Databricks
+App"* (requirement 4) and the agent to be *"registered against your MCP server
+as an external tool"* (requirement 5). Both are done. They could not be done
+against the same instance, and the reason is worth writing down.
+
+**The Databricks AI Gateway cannot authenticate to a Databricks App.** Every
+authentication method the gateway's "Connect an existing MCP server" form
+offers was tried, in order:
+
+| Method | Result |
+|---|---|
+| **Dynamic Client Registration** | `DCR registration failed... Authorization server at .../oidc does not support DCR. The server metadata does not include a registration_endpoint.` Confirmed against the workspace's own `/oidc/.well-known/oauth-authorization-server`, which publishes `authorization_endpoint` and `token_endpoint` but no `registration_endpoint`. |
+| **Bearer token (PAT)** | A personal access token is not an OAuth token. Databricks Apps accept only OAuth. A request carrying a PAT gets `302` to `/oidc/oauth2/v2.0/authorize` and never reaches the process. Verified with a direct `requests` call from a notebook. |
+| **OAuth M2M** | Needs a service principal with an OAuth secret. Creating one returned `...ServicePrincipals is only accessible by admins.` This is a shared bootcamp workspace; the account is in `users`, not `admins`. |
+| **OAuth U2M** | Needs the gateway's redirect URI registered against the app's OAuth client. That client is Databricks-managed and not editable. |
+
+So the same code runs twice:
+
+```
+    same commit, same tools, same tests
+                    |
+      +-------------+-------------+
+      |                           |
+  Databricks App            skycast.lubot.ai
+  requirement #4            requirement #5
+  platform handles auth     bearer_auth.py handles auth
+```
+
+The public instance is a plain systemd service on a server that was already
+running: its own directory, its own unprivileged user, its own venv, its own
+port, bound to `127.0.0.1` with nginx terminating TLS in front. It shares
+nothing with anything else on that host. `/mcp` requires a bearer token that
+was generated on the server and has never been committed, printed, or
+transmitted; the landing page and `/status` stay public because neither costs
+an upstream API call nor reveals a secret.
+
+The honest summary: this is not how it should work, and on a workspace where
+the account had admin it would be one deployment and an OAuth M2M connection.
+The homework's actual requirements are both met, and the workaround is one
+module and one systemd unit.
+
+---
+
 ## Deliberate deviations from the reference pattern
 
 Stated here so they read as decisions rather than as mistakes.
@@ -300,6 +350,22 @@ stated above that line, and the Google-style `Args:`/`Returns:` blocks remain
 below it for human readers. This was found by inspecting a running server, not
 by reading the docs.
 
+**`/status` exists because `/healthz` is not reachable.** `/healthz` is a de
+facto reserved path: Databricks Apps intercepts it for its own liveness probing
+and the request never reaches the process, so opening it returns an empty white
+page - not an error, not the JSON, just nothing, which reads as a broken app.
+`/status` serves the identical payload on a path no platform will claim. This is
+the second time this has come up; on the previous project a UI polling
+`/healthz` for its row counts showed "stats unavailable" on a perfectly healthy
+app.
+
+**`/status` reports where the NWS contact string came from.** Both the
+Databricks secret and the fallback are valid contact strings that
+api.weather.gov accepts, so a server quietly running on the fallback - because
+the scope was never created, or the app's service principal was never granted
+READ on it - behaves identically to one reading the secret. `"nws_contact":
+"secret"` is the proof the whole path works. The source only, never the value.
+
 **`secret_store.py`, not `secrets.py`.** Python ships a stdlib module named
 `secrets`. This directory is on `sys.path` in the deployed app, so a local
 `secrets.py` would shadow it for every library in the process — and the first
@@ -311,7 +377,7 @@ and with nothing in the traceback pointing back.
 ## Tests
 
 ```bash
-python -m pytest          # 172 tests
+python -m pytest          # 228 tests
 ruff check mcp_server tests --line-length 100
 ```
 
@@ -359,9 +425,9 @@ silently change a safety verdict.
 |---|---|---|---|
 | 1 | MCP server built with FastMCP, tools via `@mcp.tool`, streamable HTTP | [`weather_mcp_server.py`](mcp_server/weather_mcp_server.py) | `screenshots/01-tools-discovered.png` |
 | 2 | Separate adapter module, no raw `requests` in tool functions | [`weather_provider.py`](mcp_server/weather_provider.py), [`nws_client.py`](mcp_server/nws_client.py), [`http_client.py`](mcp_server/http_client.py) | no `requests` import in the server file |
-| 3 | Secrets via `WorkspaceClient().secrets.get_secret()`, nothing committed | [`secret_store.py`](mcp_server/secret_store.py), [`setup_secrets.py`](setup_secrets.py) | `screenshots/05-secret-scope.png` |
-| 4 | `requirements.txt` + `app.yaml`, deployed as its own Databricks App | [`mcp_server/app.yaml`](mcp_server/app.yaml), [`mcp_server/requirements.txt`](mcp_server/requirements.txt) | `screenshots/04-app-running.png` |
-| 5 | Agent Bricks agent registered against the MCP as an external tool | AI Gateway → MCPs → `skycast-weather` | `screenshots/06-mcp-registered.png`, `screenshots/07-agent-config.png` |
+| 3 | Secrets via `WorkspaceClient().secrets.get_secret()`, nothing committed | [`secret_store.py`](mcp_server/secret_store.py), [`setup_secrets.py`](setup_secrets.py) | `screenshots/05-secret-scope.png`, `screenshots/05b-status-secret.png` (`"nws_contact":"secret"`) |
+| 4 | `requirements.txt` + `app.yaml`, deployed as its own Databricks App | [`mcp_server/app.yaml`](mcp_server/app.yaml), [`mcp_server/requirements.txt`](mcp_server/requirements.txt) | `screenshots/04-app-running.png`, `screenshots/03-landing-page.png` |
+| 5 | Agent Bricks agent registered against the MCP as an external tool | `bootcamp_students.lubo_skycast.skycast_mcp`, agent `skycast-agent` | `screenshots/06-mcp-registered.png`, `screenshots/07-agent-config.png`. See [Two deployments](#two-deployments-and-why) |
 | 6 | Clear system prompt: purpose, tool order, guardrails | [`agent/system_prompt.md`](agent/system_prompt.md) | `screenshots/07-agent-config.png` |
 | 7 | README: architecture, tool list, setup, API + auth used | this file | — |
 | 8 | ≥3 natural-language questions with tool calls and answers | — | `screenshots/08-q1-chicago-rain.png`, `09-q2-austin-jacket.png`, `10-q3-denver-miami-drive.png` |
@@ -391,11 +457,12 @@ SkyCast-AI/
 │   ├── location.py              parsing "Chicago, IL" and "lat,lon"
 │   ├── validation.py            cleaning tool arguments
 │   ├── secret_store.py          Databricks secret resolution
+│   ├── bearer_auth.py           auth for the public instance
 │   ├── app.yaml                 deploy config, nothing sensitive
 │   └── requirements.txt
 ├── agent/
 │   └── system_prompt.md         the agent's instructions, versioned
-├── tests/                       172 tests
+├── tests/                       228 tests
 │   └── fixtures/                real recorded API responses
 ├── scripts/
 │   └── smoke_test.py            calls a running server as an MCP client
