@@ -149,10 +149,24 @@ class TestPlainHttpRoutes:
         app = server.mcp.http_app()
         return {route.path: route for route in app.routes if hasattr(route, "path")}
 
-    def test_the_root_and_healthz_are_mounted(self):
+    def test_the_root_healthz_and_status_are_mounted(self):
         paths = self.routes()
         assert "/" in paths
         assert "/healthz" in paths
+        assert "/status" in paths
+
+    def test_status_mirrors_healthz(self):
+        # /healthz is a de facto reserved path - Databricks Apps intercepts it
+        # for its own probing and the request never reaches this process, which
+        # in a browser looks like an empty white page. /status is the same
+        # payload on a path no platform will claim. Same lesson as the previous
+        # project in this bootcamp, where a UI polling /healthz for its counts
+        # read "stats unavailable" on a perfectly healthy app.
+        import json
+
+        assert json.loads(asyncio.run(server.healthz(None)).body) == json.loads(
+            asyncio.run(server.status(None)).body
+        )
 
     def test_mcp_is_still_mounted(self):
         assert any("mcp" in path for path in self.routes())
@@ -162,7 +176,7 @@ class TestPlainHttpRoutes:
         # unhealthy during somebody else's outage, and gets it restarted for
         # no reason. No queued responses: a network call would raise.
         isolated_adapters["wire"]([])
-        payload = asyncio.run(server.healthz(None))
+        payload = asyncio.run(server.status(None))
         assert payload.status_code == 200
         assert isolated_adapters["weather"].calls == []
 
@@ -174,7 +188,7 @@ class TestPlainHttpRoutes:
         monkeypatch.setenv("NWS_USER_AGENT", "(SkyCast-AI, test@example.com)")
         import json
 
-        payload = json.loads(asyncio.run(server.healthz(None)).body)
+        payload = json.loads(asyncio.run(server.status(None)).body)
         assert payload["nws_contact"] == "environment"
         assert payload["secret"] == "lubo-skycast/nws-user-agent"
 
@@ -182,7 +196,7 @@ class TestPlainHttpRoutes:
         # It carries a personal email address, and this endpoint is reachable
         # by anyone who can reach the app.
         monkeypatch.setenv("NWS_USER_AGENT", "(SkyCast-AI, private@example.com)")
-        body = asyncio.run(server.healthz(None)).body.decode()
+        body = asyncio.run(server.status(None)).body.decode()
         assert "private@example.com" not in body
 
     def test_the_landing_page_lists_every_tool(self):

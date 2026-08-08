@@ -488,12 +488,11 @@ def compare_cities(locations: list[str], date: str | None = None) -> dict[str, A
 # An MCP server mounts one path, /mcp, and answers only MCP protocol requests
 # on it. Opening the app's URL in a browser therefore returns "URL Not Found",
 # which is correct and completely unhelpful - it looks identical to a failed
-# deploy. These two routes exist so that a human who opens the URL learns what
+# deploy. These routes exist so that a human who opens the URL learns what
 # the thing is, and so a platform probe has something to hit.
 
 
-@mcp.custom_route("/healthz", methods=["GET"])
-async def healthz(request):
+def _status_payload() -> dict:
     """Liveness, plus where the NWS contact string came from.
 
     Deliberately does not call a weather API. A health check that depends on
@@ -511,17 +510,44 @@ async def healthz(request):
     this endpoint is reachable by anyone who can reach the app.
     """
     from secret_store import KEY, SCOPE, resolve_user_agent
+
+    return {
+        "status": "ok",
+        "server": "skycast-weather",
+        "tools": len(_TOOL_NAMES),
+        "nws_contact": resolve_user_agent()[1],
+        "secret": f"{SCOPE}/{KEY}",
+    }
+
+
+@mcp.custom_route("/healthz", methods=["GET"])
+async def healthz(request):
+    """The same payload, on the path platform probes look for."""
     from starlette.responses import JSONResponse
 
-    return JSONResponse(
-        {
-            "status": "ok",
-            "server": "skycast-weather",
-            "tools": len(_TOOL_NAMES),
-            "nws_contact": resolve_user_agent()[1],
-            "secret": f"{SCOPE}/{KEY}",
-        }
-    )
+    return JSONResponse(_status_payload())
+
+
+@mcp.custom_route("/status", methods=["GET"])
+async def status(request):
+    """The same payload again, on a path no hosting platform will claim.
+
+    `/healthz` is a de facto reserved path. Databricks Apps - like Cloud Run and
+    several others - intercepts it for its own liveness probing, and the request
+    never reaches this process. Opening it in a browser returns an empty white
+    page: not an error, not this JSON, just nothing. Which reads as a broken app
+    rather than as a route that was taken away.
+
+    This is the second time. On the previous project in this bootcamp a UI
+    polling /healthz for its row counts showed "stats unavailable" on a
+    perfectly healthy app, for exactly this reason.
+
+    /healthz stays, because that is what probes look for. Anything that wants an
+    answer back reads this instead.
+    """
+    from starlette.responses import JSONResponse
+
+    return JSONResponse(_status_payload())
 
 
 @mcp.custom_route("/", methods=["GET"])
@@ -571,7 +597,7 @@ forecasts, <a href="https://www.weather.gov/documentation/services-web-api">api.
 for severe-weather alerts. Neither needs an API key.</p>
 
 <p>Source: <a href="https://github.com/lubobali/SkyCast-AI">github.com/lubobali/SkyCast-AI</a>
-&nbsp;&middot;&nbsp; <a href="/healthz">/healthz</a></p>
+&nbsp;&middot;&nbsp; <a href="/status">/status</a></p>
 </body></html>"""
     )
 
