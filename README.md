@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **GitHub** | https://github.com/lubobali/SkyCast-AI |
-| **MCP server (Databricks App)** | `<APP_URL>` |
+| **MCP server (Databricks App)** | https://skycast-ai-1352785079224954.aws.databricksapps.com/mcp |
 | **Registered MCP** | `skycast-weather`, under AI Gateway → MCPs |
 | **Agent** | `skycast-agent`, under AI Gateway → Agents |
 

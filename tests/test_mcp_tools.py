@@ -136,6 +136,49 @@ class TestRegistration:
             assert "location" in properties or "locations" in properties, name
 
 
+class TestPlainHttpRoutes:
+    """The two routes that are not MCP.
+
+    An MCP server mounts /mcp and nothing else, so opening the app URL in a
+    browser returns "URL Not Found" - correct, and indistinguishable from a
+    failed deploy. These exist so that a human who opens the URL learns what
+    the thing is.
+    """
+
+    def routes(self) -> dict:
+        app = server.mcp.http_app()
+        return {route.path: route for route in app.routes if hasattr(route, "path")}
+
+    def test_the_root_and_healthz_are_mounted(self):
+        paths = self.routes()
+        assert "/" in paths
+        assert "/healthz" in paths
+
+    def test_mcp_is_still_mounted(self):
+        assert any("mcp" in path for path in self.routes())
+
+    def test_healthz_does_not_touch_a_weather_api(self, isolated_adapters):
+        # A health check that depends on Open-Meteo reports this server
+        # unhealthy during somebody else's outage, and gets it restarted for
+        # no reason. No queued responses: a network call would raise.
+        isolated_adapters["wire"]([])
+        payload = asyncio.run(server.healthz(None))
+        assert payload.status_code == 200
+        assert isolated_adapters["weather"].calls == []
+
+    def test_the_landing_page_lists_every_tool(self):
+        body = asyncio.run(server.index(None)).body.decode()
+        for name in TOOL_NAMES:
+            assert name in body
+
+    def test_the_landing_page_says_it_is_not_a_website(self):
+        # The single most useful sentence on it. Someone who opens this URL
+        # expecting an app needs to know why there is no app.
+        body = asyncio.run(server.index(None)).body.decode()
+        assert "not a website" in body
+        assert "/mcp" in body
+
+
 class TestCurrentWeather:
     def test_happy_path(self, isolated_adapters):
         isolated_adapters["wire"]([FakeResponse(GEOCODE), FakeResponse(FORECAST)])
