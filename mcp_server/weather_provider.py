@@ -340,6 +340,11 @@ class WeatherProvider:
                 {
                     "date": date,
                     "conditions": describe_code(codes[index]),
+                    # The raw code travels alongside its translation. The
+                    # recommendation logic keys off the number rather than
+                    # pattern-matching the English, so adding a phrase to
+                    # WMO_CODES can never quietly change a verdict.
+                    "weather_code": codes[index],
                     "high_f": highs[index],
                     "low_f": lows[index],
                     "precipitation_probability_pct": precip_probability[index],
