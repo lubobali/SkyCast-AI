@@ -1,8 +1,8 @@
 """Reading the one sensitive value this server has, without committing it.
 
-Worth being straight about what the secret is, because the homework's rule is
-"if your chosen API requires a key, store it as a Databricks secret" - and
-neither API here requires one. Open-Meteo is open. api.weather.gov is open too.
+Worth being straight about what the secret is, because the rule is "if an API
+requires a key, store it as a Databricks secret" - and neither API here
+requires one. Open-Meteo is open. api.weather.gov is open too.
 
 What api.weather.gov *does* require is a User-Agent naming the application and
 a way to contact whoever runs it. It answers 403 without one. That string is
@@ -40,15 +40,14 @@ import os
 
 logger = logging.getLogger(__name__)
 
-# Secret scopes are workspace-wide. In a shared workspace - and a bootcamp
-# workspace is very shared - a generic name like "database" may already exist
+# Secret scopes are workspace-wide. In a shared workspace a generic name like "database" may already exist
 # and belong to someone else, and a scope you do not own cannot be written to.
 SCOPE = os.environ.get("WEATHER_SECRET_SCOPE", "lubo-skycast")
 KEY = os.environ.get("WEATHER_SECRET_KEY", "nws-user-agent")
 
 FALLBACK_USER_AGENT = os.environ.get(
     "NWS_USER_AGENT_FALLBACK",
-    "(SkyCast-AI, bootcamp project, contact via GitHub lubobali/SkyCast-AI)",
+    "(SkyCast-AI, contact via GitHub lubobali/SkyCast-AI)",
 )
 
 

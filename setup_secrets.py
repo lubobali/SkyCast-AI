@@ -23,8 +23,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-# Workspace-wide namespace. On a shared workspace - and a bootcamp workspace is
-# very shared - a generic name like "database" may already exist under someone
+# Workspace-wide namespace. On a shared workspace a generic name like "database" may already exist under someone
 # else's ownership, and writing to a scope you do not own fails with
 # PermissionDenied, which reads like an authentication problem and is not one.
 SCOPE = "lubo-skycast"

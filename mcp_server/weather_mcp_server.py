@@ -5,8 +5,8 @@ Five tools over streamable HTTP, for a Databricks Agent Bricks agent to call:
     get_current_weather          conditions right now
     get_forecast                 a day-by-day forecast
     get_outdoor_recommendation   derived advice, with the rule that produced it
-    get_severe_weather_alerts    active NWS alerts        (stretch)
-    compare_cities               several places at once   (stretch)
+    get_severe_weather_alerts    active NWS alerts        (extra)
+    compare_cities               several places at once   (extra)
 
 Every function below is deliberately thin. It cleans its arguments, calls one
 adapter, and shapes the result. There is no `requests` import in this file and
@@ -353,7 +353,7 @@ def get_outdoor_recommendation(location: str, date: str | None = None) -> dict[s
 
 
 # ---------------------------------------------------------------------------
-# Stretch tool 1 - severe weather alerts
+# Extra tool 1 - severe weather alerts
 # ---------------------------------------------------------------------------
 
 
@@ -412,7 +412,7 @@ def get_severe_weather_alerts(location: str, limit: int = 10) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
-# Stretch tool 2 - compare several places
+# Extra tool 2 - compare several places
 # ---------------------------------------------------------------------------
 
 
@@ -539,7 +539,7 @@ async def status(request):
     page: not an error, not this JSON, just nothing. Which reads as a broken app
     rather than as a route that was taken away.
 
-    This is the second time. On the previous project in this bootcamp a UI
+    This is the second time. On a previous project a UI
     polling /healthz for its row counts showed "stats unavailable" on a
     perfectly healthy app, for exactly this reason.
 

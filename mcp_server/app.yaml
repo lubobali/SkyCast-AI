@@ -21,7 +21,7 @@ env:
   # carries no personal address: a generic contact is better than a 403, and
   # far better than a real email address committed to a public repo.
   - name: NWS_USER_AGENT_FALLBACK
-    value: "(SkyCast-AI, bootcamp project, contact via GitHub lubobali/SkyCast-AI)"
+    value: "(SkyCast-AI, contact via GitHub lubobali/SkyCast-AI)"
 
   # api.weather.gov publishes no hard numeric rate limit; it asks for
   # reasonable use and throttles clients that abuse it. Pacing deliberately

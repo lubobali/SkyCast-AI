@@ -1,7 +1,7 @@
 # SkyCast-AI — agent configuration
 
-The deployed agent, written down. The homework asks for the agent config
-alongside the server, and a screenshot of a web form is not something anyone can
+The deployed agent, written down. The agent config lives alongside the
+server, and a screenshot of a web form is not something anyone can
 diff, so this is the same information as text.
 
 The instructions themselves are in [`system_prompt.md`](system_prompt.md).
@@ -15,7 +15,7 @@ The instructions themselves are in [`system_prompt.md`](system_prompt.md).
 | **Name** | `skycast-agent` |
 | **Type** | Supervisor Agent (Databricks Agent Bricks) |
 | **Model** | `claude-haiku-4-5` |
-| **Attached MCP** | `bootcamp_students.lubo_skycast.skycast_mcp` |
+| **Attached MCP** | `main.lubo_skycast.skycast_mcp` |
 | **Tools exposed** | all 5, with "automatically include tools added in future" on |
 | **Instructions** | [`system_prompt.md`](system_prompt.md), pasted verbatim |
 | **Also attached** | `python_exec` — attached by Agent Bricks, cannot be removed |
@@ -38,8 +38,8 @@ the system prompt names it and says why its output would be fiction.
 
 | | |
 |---|---|
-| **Unity Catalog name** | `bootcamp_students.lubo_skycast.skycast_mcp` |
-| **Connection** | `bootcamp_students.lubo_skycast.skycast_mcp_connection` |
+| **Unity Catalog name** | `main.lubo_skycast.skycast_mcp` |
+| **Connection** | `main.lubo_skycast.skycast_mcp_connection` |
 | **Server URL** | `https://skycast.lubot.ai/mcp` |
 | **Auth** | Bearer token, generated on the server, never committed |
 | **Status** | Active |

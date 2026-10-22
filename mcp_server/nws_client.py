@@ -1,6 +1,6 @@
 """National Weather Service adapter: active severe-weather alerts.
 
-The second source, layered in exactly as the homework suggests. Open-Meteo
+The second source, layered on top of Open-Meteo. Open-Meteo
 models the atmosphere; it does not know that a human forecaster in Shreveport
 has issued a Flood Advisory for two named counties. Only NWS carries that, and
 it is the part a traveller actually needs.

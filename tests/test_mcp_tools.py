@@ -84,8 +84,7 @@ class TestRegistration:
         assert set(registered_tools()) == TOOL_NAMES
 
     def test_every_tool_documents_args_and_returns_in_source(self):
-        # The Google-style docstring the homework asks for, for human readers
-        # and for anyone grading the source.
+        # Google-style docstrings, for human readers of the source.
         for name in TOOL_NAMES:
             docstring = getattr(server, name).__doc__ or ""
             assert "Args:" in docstring, f"{name} does not document its arguments"
@@ -123,7 +122,7 @@ class TestRegistration:
         )
 
     def test_the_prediction_tool_states_its_thresholds(self):
-        # The homework asks for exactly this: the rule has to be in the
+        # The rule has to be in the
         # docstring, not buried in the code.
         description = registered_tools()["get_outdoor_recommendation"].description
         assert "40%" in description
@@ -159,8 +158,8 @@ class TestPlainHttpRoutes:
         # /healthz is a de facto reserved path - Databricks Apps intercepts it
         # for its own probing and the request never reaches this process, which
         # in a browser looks like an empty white page. /status is the same
-        # payload on a path no platform will claim. Same lesson as the previous
-        # project in this bootcamp, where a UI polling /healthz for its counts
+        # payload on a path no platform will claim. Same lesson as a previous
+        # project, where a UI polling /healthz for its counts
         # read "stats unavailable" on a perfectly healthy app.
         import json
 

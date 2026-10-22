@@ -7,22 +7,20 @@
 | **GitHub** | https://github.com/lubobali/SkyCast-AI |
 | **MCP server, Databricks App** | https://skycast-ai-1352785079224954.aws.databricksapps.com |
 | **MCP server, public instance** | https://skycast.lubot.ai — `/mcp` needs a bearer token |
-| **Registered MCP** | `bootcamp_students.lubo_skycast.skycast_mcp` |
+| **Registered MCP** | `main.lubo_skycast.skycast_mcp` |
 | **Agent** | `skycast-agent` (Supervisor Agent) |
 
 > The Databricks App URL requires workspace authentication and will not open for
 > someone who is not signed in there. `https://skycast.lubot.ai/` is public and
 > shows the same server's landing page and tool list.
 >
-> **Why there are two.** The App is the deployment the homework requires. The
+> **Why there are two.** The MCP server is designed to run as its own Databricks App. The
 > AI Gateway turned out to be unable to authenticate *to* a Databricks App, so a
 > second instance of the same code runs somewhere the gateway can reach. The
 > full diagnosis is in [Two deployments](#two-deployments-and-why).
 
-Databricks AI Bootcamp, Day 3 homework. Built from the pattern in
-[`EcZachly/databricks-lakebase-app-day-3`](https://github.com/EcZachly/databricks-lakebase-app-day-3)
-(Agent Bricks + an Alpaca paper-trading MCP server), with weather in place of
-trading.
+A weather-prediction MCP server and an Agent Bricks agent on Databricks: the
+agent calls the server's tools, and the server turns raw forecasts into advice.
 
 ---
 
@@ -87,7 +85,7 @@ cold.
          └───────────────────┘  └─────────────────────┘
 ```
 
-The split the homework asks for, in one line: **tools are thin, adapters hold
+The design in one line: **tools are thin, adapters hold
 every HTTP call, and judgement lives on its own with no network under it.**
 There is no `import requests` in `weather_mcp_server.py`, and there is no
 threshold in it either.
@@ -96,13 +94,13 @@ threshold in it either.
 
 ## The tools
 
-| Tool | Required? | What it does |
+| Tool | Role | What it does |
 |---|---|---|
-| `get_current_weather(location)` | required #1 | Temperature, apparent temperature, humidity, conditions, wind speed and direction, precipitation, day or night |
-| `get_forecast(location, days)` | required #2 | Up to 16 days: high, low, chance of precipitation, expected precipitation, peak wind, peak UV, sunrise, sunset |
-| `get_outdoor_recommendation(location, date)` | required #3 | Umbrella, jacket, sunscreen, and outdoor-plan advice — each with the rule that produced it |
-| `get_severe_weather_alerts(location)` | **stretch** | Active NWS alerts for that point, worst first |
-| `compare_cities(locations, date)` | **stretch** | Two to five places in one call, one bad city does not lose the rest |
+| `get_current_weather(location)` | core | Temperature, apparent temperature, humidity, conditions, wind speed and direction, precipitation, day or night |
+| `get_forecast(location, days)` | core | Up to 16 days: high, low, chance of precipitation, expected precipitation, peak wind, peak UV, sunrise, sunset |
+| `get_outdoor_recommendation(location, date)` | core | Umbrella, jacket, sunscreen, and outdoor-plan advice — each with the rule that produced it |
+| `get_severe_weather_alerts(location)` | extra | Active NWS alerts for that point, worst first |
+| `compare_cities(locations, date)` | extra | Two to five places in one call, one bad city does not lose the rest |
 
 `location` is `"City, ST"`, `"City, State Name"`, or `"lat,lon"`. A bare city
 name is rejected: more than thirty states have a Springfield, and quietly
@@ -144,9 +142,8 @@ pulling in a second source.
 
 ## Weather APIs and auth
 
-Two sources, which is what the homework suggests: *"start with Open-Meteo… if
-you want alerts or US-specific severe weather data, layer in the NWS API as a
-second tool."*
+Two sources, on purpose: Open-Meteo for forecasts, and the NWS API layered in
+as a second tool for US severe-weather alerts.
 
 | Source | Used for | Auth | Why |
 |---|---|---|---|
@@ -155,8 +152,8 @@ second tool."*
 
 ### About the secret
 
-The homework says: *"If your chosen API requires a key: store it as a Databricks
-secret."* **Neither of these APIs requires a key.** Rather than invent one no
+The rule: if an API requires a key, it lives in a Databricks secret.
+**Neither of these APIs requires a key.** Rather than invent one no
 API would ever check, the pattern is demonstrated on the one value here that
 genuinely benefits from it.
 
@@ -245,7 +242,7 @@ at [`agent/agent_config.md`](agent/agent_config.md). Both are in the repo so the
 agent's behaviour is versioned next to the tools it calls, rather than living
 only in a web form that nobody can diff.
 
-It covers what the homework asks for — what the agent does, which tools to call
+It covers what the agent does, which tools to call
 in what order, and guardrails — and the guardrails are specific rather than
 aspirational:
 
@@ -278,9 +275,9 @@ and screenshotted in [`screenshots/`](screenshots/):
 
 ## Two deployments, and why
 
-The homework requires the MCP server to be *"deployed as its own Databricks
-App"* (requirement 4) and the agent to be *"registered against your MCP server
-as an external tool"* (requirement 5). Both are done. They could not be done
+The design calls for the MCP server to run as its own Databricks App, and for
+the agent to be registered against that MCP server as an external tool. Both
+are done. They could not be done
 against the same instance, and the reason is worth writing down.
 
 **The Databricks AI Gateway cannot authenticate to a Databricks App.** Every
@@ -291,7 +288,7 @@ offers was tried, in order:
 |---|---|
 | **Dynamic Client Registration** | `DCR registration failed... Authorization server at .../oidc does not support DCR. The server metadata does not include a registration_endpoint.` Confirmed against the workspace's own `/oidc/.well-known/oauth-authorization-server`, which publishes `authorization_endpoint` and `token_endpoint` but no `registration_endpoint`. |
 | **Bearer token (PAT)** | A personal access token is not an OAuth token. Databricks Apps accept only OAuth. A request carrying a PAT gets `302` to `/oidc/oauth2/v2.0/authorize` and never reaches the process. Verified with a direct `requests` call from a notebook. |
-| **OAuth M2M** | Needs a service principal with an OAuth secret. Creating one returned `...ServicePrincipals is only accessible by admins.` This is a shared bootcamp workspace; the account is in `users`, not `admins`. |
+| **OAuth M2M** | Needs a service principal with an OAuth secret. Creating one returned `...ServicePrincipals is only accessible by admins.` This is a shared workspace; the account is in `users`, not `admins`. |
 | **OAuth U2M** | Needs the gateway's redirect URI registered against the app's OAuth client. That client is Databricks-managed and not editable. |
 
 So the same code runs twice:
@@ -302,7 +299,7 @@ So the same code runs twice:
       +-------------+-------------+
       |                           |
   Databricks App            skycast.lubot.ai
-  requirement #4            requirement #5
+  its own App               public instance
   platform handles auth     bearer_auth.py handles auth
 ```
 
@@ -316,8 +313,7 @@ an upstream API call nor reveals a secret.
 
 The honest summary: this is not how it should work, and on a workspace where
 the account had admin it would be one deployment and an OAuth M2M connection.
-The homework's actual requirements are both met, and the workaround is one
-module and one systemd unit.
+Both goals are met, and the workaround is one module and one systemd unit.
 
 ---
 
@@ -325,16 +321,16 @@ module and one systemd unit.
 
 Stated here so they read as decisions rather than as mistakes.
 
-**One shared HTTP client instead of a duplicated adapter.** The Day 3 repo keeps
-a full copy of `alpaca_broker.py` in each app folder, and duplicates the retry
-logic with it. Two adapters here talk to two different APIs but need the same
+**One shared HTTP client instead of a duplicated adapter.** A common pattern
+keeps a full copy of the API adapter in each app folder, and duplicates the
+retry logic with it. Two adapters here talk to two different APIs but need the same
 four behaviours — pacing, bounded retries, no retry on 4xx, and errors that name
 the offending parameter — so those live once in
 [`http_client.py`](mcp_server/http_client.py). The adapters stay separate; only
 the plumbing is shared.
 
-**No dashboard app.** The optional stretch dashboard is not built. The time went
-into the second data source, the two stretch tools, and the test suite instead.
+**No dashboard app.** A dashboard was left out on purpose. The time went into
+the second data source, the two extra tools, and the test suite instead.
 
 **Alerts are queried by point, not by state.** A statewide Texas query returns
 advisories from the Louisiana border to a user in El Paso — technically an
@@ -423,23 +419,23 @@ silently change a safety verdict.
 
 ---
 
-## Requirements traceability
+## What's built, and the proof
 
-| # | Requirement | Where | Evidence |
+| # | What | Where | Evidence |
 |---|---|---|---|
 | 1 | MCP server built with FastMCP, tools via `@mcp.tool`, streamable HTTP | [`weather_mcp_server.py`](mcp_server/weather_mcp_server.py) | `screenshots/02-smoke-test.txt` |
 | 2 | Separate adapter module, no raw `requests` in tool functions | [`weather_provider.py`](mcp_server/weather_provider.py), [`nws_client.py`](mcp_server/nws_client.py), [`http_client.py`](mcp_server/http_client.py) | no `requests` import in the server file |
 | 3 | Secrets via `WorkspaceClient().secrets.get_secret()`, nothing committed | [`secret_store.py`](mcp_server/secret_store.py), [`setup_secrets.py`](setup_secrets.py) | `screenshots/05-secret-scope.png`, `screenshots/05b-status-secret.png` (`"nws_contact":"secret"`) |
 | 4 | `requirements.txt` + `app.yaml`, deployed as its own Databricks App | [`mcp_server/app.yaml`](mcp_server/app.yaml), [`mcp_server/requirements.txt`](mcp_server/requirements.txt) | `screenshots/04-app-running.png`, `screenshots/03-landing-page.png` |
-| 5 | Agent Bricks agent registered against the MCP as an external tool | `bootcamp_students.lubo_skycast.skycast_mcp`, agent `skycast-agent` | `screenshots/06-mcp-registered.png`, `screenshots/07-agent-config.png`. See [Two deployments](#two-deployments-and-why) |
+| 5 | Agent Bricks agent registered against the MCP as an external tool | `main.lubo_skycast.skycast_mcp`, agent `skycast-agent` | `screenshots/06-mcp-registered.png`, `screenshots/07-agent-config.png`. See [Two deployments](#two-deployments-and-why) |
 | 6 | Clear system prompt: purpose, tool order, guardrails | [`agent/system_prompt.md`](agent/system_prompt.md), [`agent/agent_config.md`](agent/agent_config.md) | `screenshots/07-agent-config.png` |
-| 7 | README: architecture, tool list, setup, API + auth used | this file | — |
-| 8 | ≥3 natural-language questions with tool calls and answers | — | `screenshots/08-q1-chicago-and-q2-austin.png`, `screenshots/10-q3-denver-miami-drive.png`, transcribed in [`agent/agent_config.md`](agent/agent_config.md#demonstration) |
-| — | **Required tool 1**: current conditions | `get_current_weather` | `screenshots/02-smoke-test.txt` |
-| — | **Required tool 2**: forecast | `get_forecast` | `screenshots/02-smoke-test.txt` |
-| — | **Required tool 3**: prediction / recommendation | `get_outdoor_recommendation` | `screenshots/02-smoke-test.txt` |
-| — | **Stretch**: severe weather alerts | `get_severe_weather_alerts` | `screenshots/02-smoke-test.txt` |
-| — | **Stretch**: compare multiple cities | `compare_cities` | `screenshots/02-smoke-test.txt` |
+| 7 | Docs: architecture, tool list, setup, API + auth | this file | — |
+| 8 | Natural-language questions answered with tool calls | — | `screenshots/08-q1-chicago-and-q2-austin.png`, `screenshots/10-q3-denver-miami-drive.png`, transcribed in [`agent/agent_config.md`](agent/agent_config.md#demonstration) |
+| — | **Tool**: current conditions | `get_current_weather` | `screenshots/02-smoke-test.txt` |
+| — | **Tool**: forecast | `get_forecast` | `screenshots/02-smoke-test.txt` |
+| — | **Tool**: prediction / recommendation | `get_outdoor_recommendation` | `screenshots/02-smoke-test.txt` |
+| — | **Tool**: severe weather alerts | `get_severe_weather_alerts` | `screenshots/02-smoke-test.txt` |
+| — | **Tool**: compare multiple cities | `compare_cities` | `screenshots/02-smoke-test.txt` |
 | — | Docstrings with Args / Returns | every tool | `test_every_tool_documents_args_and_returns_in_source` |
 | — | Full test suite green, lint clean | `tests/` | `screenshots/12-tests.txt` |
 | — | Bad location → clean error, not a stack trace | [`_failed()`](mcp_server/weather_mcp_server.py) | `screenshots/02-smoke-test.txt`, `TestNothingEverRaises` |
@@ -474,7 +470,6 @@ SkyCast-AI/
 │   └── smoke_test.py            calls a running server as an MCP client
 ├── screenshots/
 ├── setup_secrets.py
-├── PLAN.md
 └── README.md
 ```
 
@@ -482,8 +477,8 @@ SkyCast-AI/
 
 ## Related
 
-Day 2 of the same bootcamp, and the source of `nws_client.py`, the deploy
-pattern, and the secret handling:
+The earlier project behind `nws_client.py`, the deploy pattern, and the secret
+handling:
 [**SkyIndex-AI**](https://github.com/lubobali/SkyIndex-AI) — semantic search
 over live National Weather Service text, using Lakebase and pgvector.
 

@@ -1,8 +1,7 @@
 """Open-Meteo adapter: every HTTP call and every parse for current conditions
 and forecasts lives here.
 
-This is the module the homework calls "a separate adapter module, like
-alpaca_broker.py". The rule it exists to enforce: **no raw HTTP anywhere near
+This is the separate adapter module. The rule it exists to enforce: **no raw HTTP anywhere near
 an @mcp.tool function.** A tool reads an argument, calls one method here, and
 shapes the result. If a tool ever needs `requests`, something belongs in this
 file instead.

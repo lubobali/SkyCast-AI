@@ -19,7 +19,7 @@ That is not a guess. Working through it in order:
 
   OAuth M2M                     Needs a service principal with an OAuth secret.
                                 Creating one is a workspace-admin operation,
-                                and this is a shared bootcamp workspace where
+                                and this is a shared workspace where
                                 the account is in `users`, not `admins`:
                                 "...ServicePrincipals is only accessible by
                                 admins."
@@ -28,7 +28,7 @@ That is not a guess. Working through it in order:
                                 against the app's OAuth client, which is
                                 Databricks-managed and not editable.
 
-So the App deployment stands - that is what the homework requires - and a
+So the App deployment stands - that is the intended design - and a
 second instance of the *same code* runs somewhere the gateway can reach, with
 this module standing in for the auth the platform was providing.
 

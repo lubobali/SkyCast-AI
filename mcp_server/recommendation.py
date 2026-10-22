@@ -1,8 +1,7 @@
 """Derived judgement: turning a forecast into advice.
 
-This is the module the homework singles out. The prediction tool has to *"do
-more than echo the raw API"* and has to *"apply some threshold/logic of your
-choosing and explain it in the tool's docstring."* So every threshold below is
+This is where the judgement lives. The prediction tool must do more than echo
+the raw API: it applies thresholds and explains them in the tool's docstring. So every threshold below is
 a named constant, every verdict reports the rule that produced it, and none of
 this touches the network - which is what makes it all directly testable.
 
